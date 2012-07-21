@@ -1,5 +1,5 @@
 //
-//  SSViewController.h
+//  SSVariableView.h
 //  Suess for iPad
 //
 //  Created by Cory Kilger on 7/20/12.
@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class SSCanvasView;
-
-@interface SSViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet SSCanvasView *canvasView;
+@interface SSVariableView : UIView
 
 @end

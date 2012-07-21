@@ -7,6 +7,7 @@
 //
 
 #import "SSViewController.h"
+#import "SSCanvasView.h"
 
 @interface SSViewController ()
 
@@ -14,21 +15,21 @@
 
 @implementation SSViewController
 
-- (void)viewDidLoad
-{
+@synthesize canvasView;
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    [self.canvasView addStatement:@"Write"];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
+}
+
+- (void)viewDidUnload {
+    [self setCanvasView:nil];
+    [super viewDidUnload];
 }
 
 @end

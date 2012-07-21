@@ -1,5 +1,5 @@
 //
-//  SSViewController.h
+//  SSCanvas.h
 //  Suess for iPad
 //
 //  Created by Cory Kilger on 7/20/12.
@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class SSCanvasView;
+@interface SSCanvasView : UIView
 
-@interface SSViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet SSCanvasView *canvasView;
+- (void)addStatement:(NSString *)statement;
+- (void)addVariable:(NSString *)statement;
 
 @end
