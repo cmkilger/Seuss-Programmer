@@ -23,6 +23,8 @@
 		9A3E36C815BA74E400C3C268 /* SSCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36C715BA74E400C3C268 /* SSCanvasView.m */; };
 		9A3E36CB15BA755E00C3C268 /* SSStatementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CA15BA755E00C3C268 /* SSStatementView.m */; };
 		9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CD15BA758100C3C268 /* SSVariableView.m */; };
+		9AE1484E15BB3D7800380CD5 /* Hello World.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1484D15BB3D7800380CD5 /* Hello World.suess */; };
+		9AE1485115BB3DAF00380CD5 /* What is your name?.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1485015BB3DAF00380CD5 /* What is your name?.suess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		9A3E36CA15BA755E00C3C268 /* SSStatementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatementView.m; sourceTree = "<group>"; };
 		9A3E36CC15BA758100C3C268 /* SSVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariableView.h; sourceTree = "<group>"; };
 		9A3E36CD15BA758100C3C268 /* SSVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariableView.m; sourceTree = "<group>"; };
+		9AE1484D15BB3D7800380CD5 /* Hello World.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hello World.suess"; sourceTree = "<group>"; };
+		9AE1485015BB3DAF00380CD5 /* What is your name?.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "What is your name?.suess"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,8 @@
 				9A3E36CA15BA755E00C3C268 /* SSStatementView.m */,
 				9A3E36CC15BA758100C3C268 /* SSVariableView.h */,
 				9A3E36CD15BA758100C3C268 /* SSVariableView.m */,
+				9AE1484D15BB3D7800380CD5 /* Hello World.suess */,
+				9AE1485015BB3DAF00380CD5 /* What is your name?.suess */,
 			);
 			path = "Suess for iPad";
 			sourceTree = "<group>";
@@ -240,6 +246,8 @@
 			files = (
 				9A3E369C15BA745700C3C268 /* InfoPlist.strings in Resources */,
 				9A3E36A815BA745700C3C268 /* SSViewController.xib in Resources */,
+				9AE1484E15BB3D7800380CD5 /* Hello World.suess in Resources */,
+				9AE1485115BB3DAF00380CD5 /* What is your name?.suess in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +459,7 @@
 				9A3E36C215BA745700C3C268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A3E36C315BA745700C3C268 /* Build configuration list for PBXNativeTarget "Suess for iPadTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +468,7 @@
 				9A3E36C515BA745700C3C268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

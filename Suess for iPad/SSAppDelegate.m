@@ -17,6 +17,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Place default documents into the documents folder
+    NSString * bundlePath = [[NSBundle mainBundle] bundlePath];
+    NSString * documentsFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:bundlePath error:nil];
+    for (NSString * file in files) {
+        if ([[file pathExtension] isEqualToString:@"suess"]) {
+            NSString * toPath = [documentsFolder stringByAppendingPathComponent:[file lastPathComponent]];
+            NSString * fromPath = [bundlePath stringByAppendingPathComponent:file];
+            [[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:nil];
+        }
+    }
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[SSViewController alloc] initWithNibName:@"SSViewController" bundle:nil];

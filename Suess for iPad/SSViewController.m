@@ -21,6 +21,7 @@
     [super viewDidLoad];
     
     [self.canvasView addStatement:@"Write"];
+    [self.canvasView addStatement:@"Read"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -1,0 +1,4 @@
+Write "What is your name?".
+Read name.
+Write "Hello ".
+Write name.
