@@ -19,6 +19,7 @@
 @property (strong) NSMutableArray * statementViews;
 
 @property (strong) SSStatementView * movingStatement;
+@property (strong) SSVariableView * movingVariable;
 
 @property (strong) UIScrollView * mainView;
 @property (strong) UIScrollView * commandResevoir;
@@ -32,6 +33,7 @@
 @synthesize variableViews = _variableViews;
 @synthesize statementViews = _statementViews;
 @synthesize movingStatement = _movingStatement;
+@synthesize movingVariable = _movingVariable;
 @synthesize mainView = _mainView;
 @synthesize commandResevoir = _commandResevoir;
 @synthesize variableResevoir = _variableResevoir;
@@ -90,8 +92,18 @@
     [self setNeedsLayout];
 }
 
-- (void)addVariable:(NSString *)statement {
-    
+- (void)addVariable:(NSString *)variable {
+    SSVariableView * view = [[SSVariableView alloc] initWithVariable:variable];
+    [view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
+    [view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
+    view.layer.shadowColor = [[UIColor blackColor] CGColor];
+    view.layer.shadowOpacity = 0.6;
+    view.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+    view.layer.shadowRadius = 3.0;
+    view.layer.cornerRadius = 3.0;
+    [self.variableViews addObject:view];
+    [self.variableResevoir addSubview:view];
+    [self setNeedsLayout];
 }
 
 - (void)moveStatement:(UIGestureRecognizer *)gesture {
@@ -168,6 +180,71 @@
     }
 }
 
+- (void)moveVariable:(UIGestureRecognizer *)gesture {
+    SSVariableView * view = (SSVariableView *)[gesture view];
+    CGPoint point = [gesture locationInView:self];
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan: {
+            if (!self.movingVariable) {
+                SSVariableView * movingView = view;
+                if ([self.variableViews containsObject:movingView]) {
+                    movingView = [[SSVariableView alloc] initWithVariable:view.variable];
+                    [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+                    [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+                    movingView.layer.shadowColor = [[UIColor blackColor] CGColor];
+                    movingView.layer.shadowOpacity = 0.6;
+                    movingView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+                    movingView.layer.shadowRadius = 3.0;
+                    movingView.layer.cornerRadius = 3.0;
+                }
+                else {
+                    // TODO: remove from the statement
+                }
+                movingView.center = point;
+                [self addSubview:movingView];
+                self.movingVariable = movingView;
+                [UIView animateWithDuration:0.1 animations:^{
+                    movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
+                    movingView.alpha = 0.6;
+                    movingView.layer.shadowOpacity = 0.1;
+                }];
+            }
+        } break;
+            
+        case UIGestureRecognizerStateChanged: {
+            self.movingVariable.center = point;
+            // TODO: unprepare any previously prepared view, prepare the new view if needed
+        } break;
+            
+        case UIGestureRecognizerStateEnded: {
+            SSVariableView * movingView = self.movingVariable;
+            self.movingVariable = nil;
+            if (CGRectContainsPoint(self.mainView.frame, point)) {
+                // TODO: Add the variable to the statement
+                [UIView animateWithDuration:0.1 animations:^{
+                    movingView.transform = CGAffineTransformIdentity;
+                    movingView.alpha = 1.0;
+                    movingView.center = point;
+                    movingView.layer.shadowOpacity = 0.6;
+                    [self layoutStatements];
+                }];
+            }
+            else {
+                [UIView animateWithDuration:0.1 animations:^{
+                    movingView.transform = CGAffineTransformMakeScale(3.0, 3.0);
+                    movingView.alpha = 0.0;
+                    movingView.center = point;
+                } completion:^(BOOL finished) {
+                    [self.movingVariable removeFromSuperview];
+                }];
+            }
+        } break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)layoutStatements {
     CGFloat y = 20;
     SSStatementView * movingStatement = self.movingStatement;
@@ -194,6 +271,17 @@
         statementView.frame = frame;
         y += 10 + CGRectGetHeight(frame);
     }
+    
+    y = 20;
+    for (UIView * statementView in self.variableViews) {
+        CGRect frame = statementView.frame;
+        frame.origin.x = 20;
+        frame.origin.y = y;
+        statementView.frame = frame;
+        y += 10 + CGRectGetHeight(frame);
+    }
+    
+    [self layoutStatements];
 }
 
 @end

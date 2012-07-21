@@ -10,4 +10,8 @@
 
 @interface SSVariableView : UIView
 
+@property (readonly) NSString * variable;
+
+- (id)initWithVariable:(NSString *)variable;
+
 @end
