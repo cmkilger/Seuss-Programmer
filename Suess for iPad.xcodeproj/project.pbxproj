@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32EFE91315BC7F6A0015456F /* main_bg_with_nav.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EFE91215BC7F6A0015456F /* main_bg_with_nav.png */; };
+		32EFE91715BC80FC0015456F /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EFE91615BC80FC0015456F /* Default-Landscape~ipad.png */; };
 		9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369115BA745700C3C268 /* UIKit.framework */; };
 		9A3E369415BA745700C3C268 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369315BA745700C3C268 /* Foundation.framework */; };
 		9A3E369615BA745700C3C268 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369515BA745700C3C268 /* CoreGraphics.framework */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32EFE91215BC7F6A0015456F /* main_bg_with_nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = main_bg_with_nav.png; path = ../main_bg_with_nav.png; sourceTree = "<group>"; };
+		32EFE91615BC80FC0015456F /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		9A3E368D15BA745700C3C268 /* Suess for iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Suess for iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3E369115BA745700C3C268 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9A3E369315BA745700C3C268 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,10 +108,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32EFE91515BC80C00015456F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				32EFE91615BC80FC0015456F /* Default-Landscape~ipad.png */,
+				32EFE91215BC7F6A0015456F /* main_bg_with_nav.png */,
+			);
+			name = Resources;
+			path = "Suess for iPad";
+			sourceTree = "<group>";
+		};
 		9A3E368215BA745700C3C268 = {
 			isa = PBXGroup;
 			children = (
 				9A3E369715BA745700C3C268 /* Suess for iPad */,
+				32EFE91515BC80C00015456F /* Resources */,
 				9A3E36B515BA745700C3C268 /* Suess for iPadTests */,
 				9A3E369015BA745700C3C268 /* Frameworks */,
 				9A3E368E15BA745700C3C268 /* Products */,
@@ -270,6 +285,8 @@
 				9AE1485115BB3DAF00380CD5 /* Name.suess in Resources */,
 				9A86773D15BBE81300BBDAEE /* SSConsoleViewController.xib in Resources */,
 				9A60A07415BC023100DC261F /* Story.suess in Resources */,
+				32EFE91315BC7F6A0015456F /* main_bg_with_nav.png in Resources */,
+				32EFE91715BC80FC0015456F /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

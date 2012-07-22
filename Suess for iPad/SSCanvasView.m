@@ -46,10 +46,14 @@
     
     CGFloat resevoirWidth = 320;
     
+    UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_bg_with_nav.png"]];
+    [self addSubview:backgroundImg];
+    [self sendSubviewToBack:backgroundImg];    
+    
     CGRect mainViewFrame = self.bounds;
     mainViewFrame.size.width -= resevoirWidth;
     self.mainView = [[UIScrollView alloc] initWithFrame:mainViewFrame];
-    self.mainView.backgroundColor = [UIColor whiteColor];
+    self.mainView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.mainView];
     
     CGRect commandFrame = self.bounds;
@@ -57,13 +61,15 @@
     commandFrame.size.width = resevoirWidth;
     commandFrame.size.height = floorf(commandFrame.size.height / 2);
     self.commandResevoir = [[UIScrollView alloc] initWithFrame:commandFrame];
-    self.commandResevoir.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:1.0 alpha:1.0];
+    //self.commandResevoir.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:1.0 alpha:1.0];
+    self.commandResevoir.backgroundColor = [UIColor clearColor];    
     [self addSubview:self.commandResevoir];
     
     commandFrame.origin.y = CGRectGetMaxY(commandFrame);
     commandFrame.size.height = CGRectGetMaxY(self.bounds) - commandFrame.origin.y;
     self.variableResevoir = [[UIScrollView alloc] initWithFrame:commandFrame];
-    self.variableResevoir.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
+    //self.variableResevoir.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
+    self.variableResevoir.backgroundColor = [UIColor clearColor];        
     [self addSubview:self.variableResevoir];
 }
 
