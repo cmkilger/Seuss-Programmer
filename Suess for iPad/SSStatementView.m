@@ -9,36 +9,42 @@
 #import "SSStatementView.h"
 #import "SSVariableView.h"
 
+#define DEFAULT_VARIABLE_WIDTH 50.0
+#define LEFT_PADDING 10.0
+#define MIDDLE_PADDING 10.0
+#define RIGHT_PADDING 10.0
+
+#define FONT [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0]
+
 @interface SSStatementView ()
 
 @property (readwrite) NSString * statement;
-@property (readwrite) CGSize originalStatementSize;
+@property (strong) SSVariableView * variableView;
 
 @end
 
 @implementation SSStatementView
 
 @synthesize statement = _statement;
-@synthesize originalStatementSize = _originalStatementSize;
+@synthesize variableView = _variableView;
 
 - (id)initWithStatement:(NSString *)statement {
 //    for (NSString * familyName in [UIFont familyNames])
 //        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
-    
-    CGSize size = [statement sizeWithFont:[UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0]];
-    size.width += 20;
+        
+    CGSize size = [statement sizeWithFont:FONT];
+    size.width += LEFT_PADDING + MIDDLE_PADDING + DEFAULT_VARIABLE_WIDTH + RIGHT_PADDING;
     size.height += 10;
     
     CGRect frame = CGRectZero;
     frame.size = size;
-    _originalStatementSize = frame.size;
     
     self = [super initWithFrame:CGRectIntegral(frame)];
     if (self) {
         _statement = statement;
         self.backgroundColor = [UIColor blueColor];
 
-        UIFont * font = [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0];        
+        UIFont * font = FONT;        
         CGSize size = [statement sizeWithFont:font];
         CGRect frame = CGRectIntegral(CGRectMake(10, 5, size.width, size.height));                
         UILabel *theStatement = [[UILabel alloc] initWithFrame:frame];
@@ -47,56 +53,42 @@
         theStatement.textColor = [UIColor whiteColor];
         theStatement.text = statement;
         [self addSubview:theStatement];
-        
     }
     return self;
 }
 
-//- (void)drawRect:(CGRect)rect {
-//    NSString * statement = self.statement;
-//    UIFont * font = [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0];
-//    CGSize size = [statement sizeWithFont:font];
-//    CGRect frame = CGRectIntegral(CGRectMake(10, 5, size.width, size.height));
-//    frame.origin.y -= 1;
-//    [[UIColor blackColor] set];
-//    [statement drawInRect:frame withFont:font];
-//    frame.origin.y += 1;
-//    [[UIColor whiteColor] set];
-//    [statement drawInRect:frame withFont:font];
-//}
-
-- (void)prepareForVariablView:(SSVariableView *)variableView atPoint:(CGPoint)point 
-{
+- (void)prepareForVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point {
+    [self.variableView removeFromSuperview];
     CGFloat variableWidth = CGRectGetWidth(variableView.bounds);
-    CGRect statementFrarme = self.frame;
-    statementFrarme.size.width += variableWidth;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.frame = statementFrarme;
-    } completion:^(BOOL finished) {
-        NSLog(@"Animation complete!");
-    }];    
+    CGRect statementFrame = self.frame;
+    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
+    statementFrame.size.width = LEFT_PADDING + statementWidth + MIDDLE_PADDING + variableWidth + RIGHT_PADDING;
+    self.frame = statementFrame;
 }
 
 - (void)addVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point {
-    
+    [self addVariableView:variableView atIndex:0];
 }
 
 - (void)unprepare {
-    CGFloat originalWidth = self.originalStatementSize.width;    
-    CGRect statementFrarme = self.frame;
-    statementFrarme.size.width = originalWidth;
-    
-    [UIView animateWithDuration:0.1 animations:^{
-        //self.transform = CGAffineTransformMakeScale(3.0, 3.0);
-        self.frame = statementFrarme;
-    } completion:^(BOOL finished) {
-        NSLog(@"Animation complete!");
-    }];     
+    [self addSubview:self.variableView];
+    CGFloat variableWidth = (self.variableView) ? self.variableView.frame.size.width : DEFAULT_VARIABLE_WIDTH;
+    CGRect statementFrame = self.frame;
+    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
+    statementFrame.size.width = LEFT_PADDING + statementWidth + MIDDLE_PADDING + variableWidth + RIGHT_PADDING;
+    self.frame = statementFrame; 
 }
 
-- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index {
-    // TODO: 
+- (void)addVariableView:(SSVariableView *)variableView atIndex:(NSUInteger)index {
+    [self.variableView removeFromSuperview];
+    self.variableView = variableView;
+    [self prepareForVariableView:variableView atPoint:CGPointZero];
+    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
+    CGRect variableFrame = variableView.frame;
+    variableFrame.origin.x = LEFT_PADDING + statementWidth + MIDDLE_PADDING;
+    variableFrame.origin.y = 3;
+    variableView.frame = variableFrame;
+    [self addSubview:variableView];
 }
 
 @end

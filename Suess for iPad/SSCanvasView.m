@@ -48,13 +48,7 @@
     
     UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_bg_with_nav.png"]];
     [self addSubview:backgroundImg];
-    [self sendSubviewToBack:backgroundImg];    
-    
-    CGRect mainViewFrame = self.bounds;
-    mainViewFrame.size.width -= resevoirWidth;
-    self.mainView = [[UIScrollView alloc] initWithFrame:mainViewFrame];
-    self.mainView.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.mainView];
+    [self sendSubviewToBack:backgroundImg];
     
     CGRect commandFrame = self.bounds;
     commandFrame.origin.x = commandFrame.size.width - resevoirWidth;
@@ -71,6 +65,12 @@
     //self.variableResevoir.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
     self.variableResevoir.backgroundColor = [UIColor clearColor];        
     [self addSubview:self.variableResevoir];
+    
+    CGRect mainViewFrame = self.bounds;
+    mainViewFrame.size.width -= resevoirWidth;
+    self.mainView = [[UIScrollView alloc] initWithFrame:mainViewFrame];
+    self.mainView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.mainView];
 }
 
 - (void)awakeFromNib {
@@ -220,62 +220,33 @@
             
         case UIGestureRecognizerStateChanged: {
             self.movingVariable.center = point;
-
-            // TODO: unprepare any previously prepared view, prepare the new view if needed
-            //SSStatementView * statementView = nil;
-            for (SSStatementView * tmpStatementView in self.statementViews) {
-                
-                if (CGRectContainsPoint(tmpStatementView.frame, point)) 
-                {
-                    if (tmpStatementView.bounds.size.width < 200) //temp.bounds.size.width < CGRectGetWidth(self.movingVariable.bounds) + 5) {
-                    { 
-                        [tmpStatementView prepareForVariablView:self.movingVariable atPoint:[self convertPoint:point toView:tmpStatementView]];
-                        
-                        [UIView animateWithDuration:0.1 animations:^{
-                            self.movingVariable.transform = CGAffineTransformIdentity;
-                            self.movingVariable.alpha = 1.0;
-                            self.movingVariable.center = point;
-                            self.movingVariable.layer.shadowOpacity = 0.6;
-                            //[self layoutStatements];
-                        }];
-                        
-                        break;
-                    }
-                    else 
-                    {
-                        //CGFloat tempStatementHeight = CGRectGetHeight(tmpStatementView.bounds);
-                        //CGRect statementThreshHold = tmpStatementView.frame;
-                        //statementThreshHold.size.width += 60;
-                        
-                        if (!CGRectContainsRect(tmpStatementView.frame, self.movingVariable.frame)) 
-                        {
-                            [tmpStatementView unprepare];
-                            break;                        
-                        }
-                    }                    
+            [UIView animateWithDuration:0.2 animations:^{
+                for (SSStatementView * statementView in self.statementViews) {
+                    if (CGRectContainsPoint(statementView.frame, point))
+                        [statementView prepareForVariableView:self.movingVariable atPoint:[self convertPoint:point toView:statementView]];
+                    else
+                        [statementView unprepare];
                 }
-            }
+            }];
             
         } break;
             
         case UIGestureRecognizerStateEnded: {
+            BOOL added = NO;
             SSVariableView * movingView = self.movingVariable;
             self.movingVariable = nil;
-            if (CGRectContainsPoint(self.mainView.frame, point)) {
-                // TODO: Add the variable to the statement
-                [UIView animateWithDuration:0.1 animations:^{
-                    movingView.transform = CGAffineTransformIdentity;
-                    movingView.alpha = 1.0;
-                    movingView.center = point;
-                    movingView.layer.shadowOpacity = 0.6;
-                    [self layoutStatements];
-                }];
+            movingView.alpha = 1.0;
+            movingView.transform = CGAffineTransformIdentity;
+            for (SSStatementView * statementView in self.statementViews) {
+                if (CGRectContainsPoint(statementView.frame, point)) {
+                    added = YES;
+                    [statementView addVariableView:movingView atPoint:point];
+                    break;
+                }
             }
-            else {
+            if (!added) {
                 [UIView animateWithDuration:0.1 animations:^{
-                    movingView.transform = CGAffineTransformMakeScale(3.0, 3.0);
                     movingView.alpha = 0.0;
-                    movingView.center = point;
                 } completion:^(BOOL finished) {
                     [self.movingVariable removeFromSuperview];
                 }];
