@@ -46,7 +46,7 @@
     
     CGFloat resevoirWidth = 320;
     
-    UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_bg_with_nav.png"]];
+    UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"workarea_bg_only.png"]];
     [self addSubview:backgroundImg];
     [self sendSubviewToBack:backgroundImg];    
     
@@ -294,9 +294,9 @@
     CGFloat movingHeight = movingStatement.frame.size.height;
     for (SSStatementView * statementView in self.statementViews) {
         CGRect frame = statementView.frame;
-        frame.origin.x = 20;
+        frame.origin.x = 30;
         frame.origin.y = y;
-        y += 10 + frame.size.height;
+        y += 14 + frame.size.height;
         if (movingStatement && movingY < CGRectGetMidY(frame))
             frame.origin.y += movingHeight;
         statementView.frame = frame;
@@ -306,20 +306,20 @@
 }
 
 - (void)layoutSubviews {
-    CGFloat y = 20;
+    CGFloat y = 15;
     for (UIView * statementView in self.commandViews) {
         CGRect frame = statementView.frame;
-        frame.origin.x = 20;
+        frame.origin.x = 60;
         frame.origin.y = y;
         statementView.frame = frame;
-        y += 10 + CGRectGetHeight(frame);
+        y += 50 + CGRectGetHeight(frame);
     }
     self.commandResevoir.contentSize = CGSizeMake(self.commandResevoir.bounds.size.width, y+20);
     
-    y = 20;
+    y = 30;
     for (UIView * statementView in self.variableViews) {
         CGRect frame = statementView.frame;
-        frame.origin.x = 20;
+        frame.origin.x = 60;
         frame.origin.y = y;
         statementView.frame = frame;
         y += 10 + CGRectGetHeight(frame);
