@@ -20,15 +20,14 @@ SUString * SSReadString(void * data) {
     return SUStringCreate("");
 }
 
-@interface SSConsoleViewController (){
-}
--(NSArray *)readString;
+@interface SSConsoleViewController ()
+
+-(void)readString:(NSString *)fileContents;
 
 @end
 
 @implementation SSConsoleViewController
-@synthesize consoleTextView;
-@synthesize writeString, readFromFileString;
+@synthesize consoleTextView, textViewString, writeString, editableLocation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,20 +42,21 @@ SUString * SSReadString(void * data) {
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [self readString];
+    [self readString:textViewString];
    }
 
--(NSArray *)readString
+-(void)readString:(NSString *)fileContents
 {
-   // consoleTextView.text = fileContents;
+    consoleTextView.text = fileContents;
     
     unsigned stringLength = [consoleTextView.text length];
     unsigned startIndex;
     unsigned lineEndIndex = 0;
     unsigned contentsEndIndex;
     NSRange range;
-    NSMutableArray *lines = [NSMutableArray array];
+//    NSMutableArray *lines = [NSMutableArray array];
+    NSMutableArray *lines = [[NSMutableArray alloc] init];
+
     
     while (lineEndIndex < stringLength)
     {
@@ -66,10 +66,30 @@ SUString * SSReadString(void * data) {
         [consoleTextView.text getLineStart:&startIndex end:&lineEndIndex contentsEnd:&contentsEndIndex forRange:range];
         
         // exclude line terminators...
-        [lines addObject:[consoleTextView.text substringWithRange:NSMakeRange(startIndex, contentsEndIndex - startIndex)]];
+        self.editableLocation = NSMakeRange(startIndex, contentsEndIndex - startIndex);
+        [lines addObject:[consoleTextView.text substringWithRange:self.editableLocation]];
+        
     }
-    return lines;
+    self.consoleTextView.delegate = self;
+    [self.consoleTextView setSelectedRange:self.editableLocation];
+
+   // self.consoleTextView.inputView = [[UIView alloc] initWithFrame:CGRectZero];
+
+    //return lines;
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (range.location > self.editableLocation.length-1  ) {
+        return YES;
+    } else {
+        //return (self.editableLocation.location >= range.location);
+         return NO;
+    }
+    //[textField2 setText:[textField1.text stringByReplacingCharactersInRange:range withString:string]];
+ 
+}
+
 
 
 - (void)didReceiveMemoryWarning
