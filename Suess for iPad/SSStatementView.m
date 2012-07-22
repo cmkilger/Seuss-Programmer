@@ -49,4 +49,8 @@
     [statement drawInRect:frame withFont:font];
 }
 
+- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index {
+    // TODO: 
+}
+
 @end

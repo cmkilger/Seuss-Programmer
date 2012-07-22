@@ -1,0 +1,58 @@
+Write "Hello! Please enter your name: ".
+Read name.
+Write "Hello ".
+Write name.
+Write and.
+Write ", Enter the following.".
+Write new line.
+
+Write "Enter a noun:".
+Read noun one.
+Write "Enter a boy's name:".
+Read boy name.
+Write "Enter a noun:".
+Read noun two.
+Write "Enter a noun:".
+Read noun three.
+Write "Enter a girl's name:".
+Read girl name.
+Write "Enter a animal:".
+Read noun four.
+Write "Enter a noun:".
+Read noun five.
+Write "Enter a verb(past tence):".
+Read verb.
+Write "Enter a body part:".
+Read body part.
+
+Write new line.
+Write "Here is your story...".
+Write new line.
+Write "Once apon a time there was a handsome ".
+Write noun one.
+Write " named ".
+Write boy name.
+Write ". He climbed a ".
+Write noun two.
+Write " to save a beautiful ".
+Write noun three.
+Write " named ".
+Write girl name.
+Write ".  When he got down there was a huge ".
+Write noun four.
+Write " in his way.  The ".
+Write noun four.
+Write " jumped at ".
+Write boy name.
+Write ".  ".
+Write boy name.
+Write " moved in time and drew his ".
+Write noun five.
+Write ".  He went to the giant ".
+Write noun five.
+Write " and ".
+Write verb.
+Write " his opponent right in the ".
+Write body part.
+Write ".  ".
+Write "And they lived happily ever after.  THE END".

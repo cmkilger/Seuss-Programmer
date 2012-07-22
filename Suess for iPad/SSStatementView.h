@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class SSVariableView;
+
 @interface SSStatementView : UIView
 
 @property (readonly) NSString * statement;
 
 - (id)initWithStatement:(NSString *)statement;
+- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index;
 
 @end
