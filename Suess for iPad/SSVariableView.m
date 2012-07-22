@@ -42,7 +42,7 @@
         
         UIFont * font = [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0];        
         CGSize size = [variable sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(10, 5, size.width, size.height));                
+        CGRect frame = CGRectIntegral(CGRectMake(10, 11, size.width, size.height));                
         UILabel *theVariable = [[UILabel alloc] initWithFrame:frame];
         theVariable.font = font;
         theVariable.backgroundColor = [UIColor clearColor];

@@ -99,7 +99,7 @@
     CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
     CGRect variableFrame = variableView.frame;
     variableFrame.origin.x = LEFT_PADDING + statementWidth + MIDDLE_PADDING;
-    variableFrame.origin.y = 3;
+    variableFrame.origin.y = 8;
     variableView.frame = variableFrame;
     [self addSubview:variableView];
 }
