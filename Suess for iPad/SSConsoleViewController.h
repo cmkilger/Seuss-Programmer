@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SSConsoleViewController : UIViewController
+@interface SSConsoleViewController : UIViewController <UITextFieldDelegate>{
+    
+}
+
+@property (strong, nonatomic) IBOutlet UITextView *consoleTextView;
+
+@property (strong, nonatomic) NSString *writeString;
+@property (strong, nonatomic) NSString *readFromFileString;
+- (IBAction)doneButtonClicked:(id)sender;
 
 @end

@@ -139,6 +139,9 @@
 				9A3E36A615BA745700C3C268 /* SSViewController.xib */,
 				AFCB95E115BB322700669CA7 /* SSPopOverViewController.h */,
 				AFCB95E215BB322800669CA7 /* SSPopOverViewController.m */,
+				AFCB95F915BB7B6700669CA7 /* SSConsoleViewController.h */,
+				AFCB95FA15BB7B6700669CA7 /* SSConsoleViewController.m */,
+				AFCB95FB15BB7B6700669CA7 /* SSConsoleViewController.xib */,
 				9A3E369815BA745700C3C268 /* Supporting Files */,
 				9A3E36C615BA74E400C3C268 /* SSCanvasView.h */,
 				9A3E36C715BA74E400C3C268 /* SSCanvasView.m */,
@@ -148,9 +151,6 @@
 				9A3E36CD15BA758100C3C268 /* SSVariableView.m */,
 				9AE1484D15BB3D7800380CD5 /* Hello World.suess */,
 				9AE1485015BB3DAF00380CD5 /* What is your name?.suess */,
-				AFCB95F915BB7B6700669CA7 /* SSConsoleViewController.h */,
-				AFCB95FA15BB7B6700669CA7 /* SSConsoleViewController.m */,
-				AFCB95FB15BB7B6700669CA7 /* SSConsoleViewController.xib */,
 			);
 			path = "Suess for iPad";
 			sourceTree = "<group>";
@@ -406,6 +406,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
 				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -417,6 +418,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
 				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
