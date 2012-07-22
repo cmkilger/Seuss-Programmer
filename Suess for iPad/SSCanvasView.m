@@ -71,6 +71,8 @@
     self.mainView = [[UIScrollView alloc] initWithFrame:mainViewFrame];
     self.mainView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.mainView];
+    
+    self.mainView.clipsToBounds = NO;
 }
 
 - (void)awakeFromNib {
@@ -304,7 +306,12 @@
 
 - (void)addStatement:(NSString *)name withVariable:(NSString *)parameter {
     SSStatementView * statement = [[SSStatementView alloc] initWithStatement:name];
+    
+    [statement addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+    [statement addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+    
     [self.statementViews addObject:statement];
+    
     [self.mainView addSubview:statement];
     
     SSVariableView * variable = [[SSVariableView alloc] initWithVariable:parameter];

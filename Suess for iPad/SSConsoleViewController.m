@@ -9,6 +9,8 @@
 #import "SSConsoleViewController.h"
 #import <Suess/Suess.h>
 
+#define FONT [UIFont fontWithName:@"DoctorSoosLight" size:36.0]
+
 typedef void(^SSReadCallback)(NSString *);
 
 @interface SSConsoleViewController ()
@@ -90,6 +92,7 @@ SUString * SSReadString(void * data) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.consoleTextView.font = FONT;
     self.consoleTextView.text = self.text;
     self.navigationBar.topItem.title = self.title;
     // TODO:    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChange) name:UIKeyboardDidShowNotification object:nil];
