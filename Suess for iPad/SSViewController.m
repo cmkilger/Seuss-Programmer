@@ -14,12 +14,15 @@
     NSString *contentOfFileSelected;
 }
 
+@property (strong) NSString * currentFilePath;
+
 @end
 
 @implementation SSViewController
 
 @synthesize popOverViewController = _popOverViewController;
 @synthesize documentPickerPopover = _documentPickerPopover;
+@synthesize currentFilePath = _currentFilePath;
 
 @synthesize canvasView;
 
@@ -31,19 +34,8 @@
 }
 
 - (void)fileSelected:(NSString *)fileName{
-    //Just dismiss the popOverViewController.
-    
-    
-   // if ([fileName isEqualToString:@"Hello World"]) {
-        contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
-        
-      //  NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
-    //} else if ([fileName isEqualToString:@"What is your name?"]) {
-     //   contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
-
-       // NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
-    //}
-    
+    self.currentFilePath = fileName;
+    contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
     [self.documentPickerPopover dismissPopoverAnimated:YES];
 }
 
@@ -57,10 +49,8 @@
 }
 
 - (IBAction)runButtonClicked:(id)sender {
-    SSConsoleViewController * console = [[SSConsoleViewController alloc] initWithNibName:@"SSConsoleViewController" bundle:nil];
-    console.textViewString = contentOfFileSelected;
+    SSConsoleViewController * console = [[SSConsoleViewController alloc] initFilePath:self.currentFilePath];
     [self presentModalViewController:console animated:YES];
-
 }
 
 - (IBAction)buttonForPopOverClicked:(id)sender {
