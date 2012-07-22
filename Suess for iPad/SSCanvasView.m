@@ -14,9 +14,11 @@
 
 @interface SSCanvasView ()
 
-@property (strong) NSMutableArray * statementViews;
+@property (strong) NSMutableArray * commandViews;
 @property (strong) NSMutableArray * variableViews;
-@property (strong) UIView * movingView;
+@property (strong) NSMutableArray * statementViews;
+
+@property (strong) SSStatementView * movingStatement;
 
 @property (strong) UIScrollView * mainView;
 @property (strong) UIScrollView * commandResevoir;
@@ -26,16 +28,18 @@
 
 @implementation SSCanvasView
 
-@synthesize statementViews = _statementViews;
+@synthesize commandViews = _commandViews;
 @synthesize variableViews = _variableViews;
-@synthesize movingView = _movingView;
+@synthesize statementViews = _statementViews;
+@synthesize movingStatement = _movingStatement;
 @synthesize mainView = _mainView;
 @synthesize commandResevoir = _commandResevoir;
 @synthesize variableResevoir = _variableResevoir;
 
 - (void)initialize {
-    _statementViews = [[NSMutableArray alloc] init];
+    _commandViews = [[NSMutableArray alloc] init];
     _variableViews = [[NSMutableArray alloc] init];
+    _statementViews = [[NSMutableArray alloc] init];
     
     CGFloat resevoirWidth = 320;
     
@@ -58,8 +62,6 @@
     self.variableResevoir = [[UIScrollView alloc] initWithFrame:commandFrame];
     self.variableResevoir.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
     [self addSubview:self.variableResevoir];
-    
-    
 }
 
 - (void)awakeFromNib {
@@ -83,7 +85,7 @@
     view.layer.shadowOffset = CGSizeMake(0.0, 1.0);
     view.layer.shadowRadius = 3.0;
     view.layer.cornerRadius = 3.0;
-    [self.statementViews addObject:view];
+    [self.commandViews addObject:view];
     [self.commandResevoir addSubview:view];
     [self setNeedsLayout];
 }
@@ -97,9 +99,9 @@
     CGPoint point = [gesture locationInView:self];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
-            if (!self.movingView) {
+            if (!self.movingStatement) {
                 SSStatementView * movingView = view;
-                if ([self.statementViews containsObject:movingView]) {
+                if ([self.commandViews containsObject:movingView]) {
                     movingView = [[SSStatementView alloc] initWithStatement:view.statement];
                     [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
                     [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
@@ -109,9 +111,12 @@
                     movingView.layer.shadowRadius = 3.0;
                     movingView.layer.cornerRadius = 3.0;
                 }
+                else {
+                    [self.statementViews removeObject:movingView];
+                }
                 movingView.center = point;
                 [self addSubview:movingView];
-                self.movingView = movingView;
+                self.movingStatement = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
                     movingView.alpha = 0.6;
@@ -121,18 +126,41 @@
         } break;
             
         case UIGestureRecognizerStateChanged: {
-            self.movingView.center = point;
+            self.movingStatement.center = point;
+            [UIView animateWithDuration:0.1 animations:^{
+                [self layoutStatements];
+            }];
         } break;
             
         case UIGestureRecognizerStateEnded: {
-            SSStatementView * movingView = (SSStatementView *)self.movingView;
-            self.movingView = nil;
-            [UIView animateWithDuration:0.1 animations:^{
-                movingView.transform = CGAffineTransformIdentity;
-                movingView.alpha = 1.0;
-                movingView.center = point;
-                movingView.layer.shadowOpacity = 0.6;
-            }];
+            SSStatementView * movingView = self.movingStatement;
+            self.movingStatement = nil;
+            if (CGRectContainsPoint(self.mainView.frame, point)) {
+                NSUInteger index = 0;
+                for (SSStatementView * statementView in self.statementViews) {
+                    if (CGRectGetMidY(statementView.frame) < movingView.center.y)
+                        index++;
+                    else
+                        break;
+                }
+                [self.statementViews insertObject:movingView atIndex:index];
+                [UIView animateWithDuration:0.1 animations:^{
+                    movingView.transform = CGAffineTransformIdentity;
+                    movingView.alpha = 1.0;
+                    movingView.center = point;
+                    movingView.layer.shadowOpacity = 0.6;
+                    [self layoutStatements];
+                }];
+            }
+            else {
+                [UIView animateWithDuration:0.1 animations:^{
+                    movingView.transform = CGAffineTransformMakeScale(3.0, 3.0);
+                    movingView.alpha = 0.0;
+                    movingView.center = point;
+                } completion:^(BOOL finished) {
+                    [self.movingStatement removeFromSuperview];
+                }];
+            }
         } break;
             
         default:
@@ -140,11 +168,28 @@
     }
 }
 
-- (void)layoutSubviews {
-    CGFloat y = 10;
-    for (UIView * statementView in self.statementViews) {
+- (void)layoutStatements {
+    CGFloat y = 20;
+    SSStatementView * movingStatement = self.movingStatement;
+    CGFloat movingY = movingStatement.center.y;
+    CGFloat movingHeight = movingStatement.frame.size.height;
+    for (SSStatementView * statementView in self.statementViews) {
         CGRect frame = statementView.frame;
-        frame.origin.x = 5;
+        frame.origin.x = 20;
+        frame.origin.y = y;
+        y += 10 + frame.size.height;
+        if (movingStatement && movingY < CGRectGetMidY(frame))
+            frame.origin.y += movingHeight;
+        statementView.frame = frame;
+        NSLog(@"%@", statementView);
+    }
+}
+
+- (void)layoutSubviews {
+    CGFloat y = 20;
+    for (UIView * statementView in self.commandViews) {
+        CGRect frame = statementView.frame;
+        frame.origin.x = 20;
         frame.origin.y = y;
         statementView.frame = frame;
         y += 10 + CGRectGetHeight(frame);
