@@ -7,6 +7,18 @@
 //
 
 #import "SSConsoleViewController.h"
+#import <Suess/Suess.h>
+
+void SSWriteString(SUString * string, void * data) {
+    SSConsoleViewController * self = (__bridge SSConsoleViewController *) data;
+    // TODO: [self write:[NSString stringWithCString:SUStringGetCString(string) encoding:NSUTF8StringEncoding]];
+}
+
+SUString * SSReadString(void * data) {
+    SSConsoleViewController * self = (__bridge SSConsoleViewController *) data;
+    // TODO: read
+    return SUStringCreate("");
+}
 
 @interface SSConsoleViewController (){
 }

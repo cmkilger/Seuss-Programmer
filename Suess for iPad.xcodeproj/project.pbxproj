@@ -23,6 +23,7 @@
 		9A3E36C815BA74E400C3C268 /* SSCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36C715BA74E400C3C268 /* SSCanvasView.m */; };
 		9A3E36CB15BA755E00C3C268 /* SSStatementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CA15BA755E00C3C268 /* SSStatementView.m */; };
 		9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CD15BA758100C3C268 /* SSVariableView.m */; };
+		9AB784AF15BBC703002CEE23 /* libsuess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB784AE15BBC703002CEE23 /* libsuess.a */; };
 		9AE1484E15BB3D7800380CD5 /* Hello World.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1484D15BB3D7800380CD5 /* Hello World.suess */; };
 		9AE1485115BB3DAF00380CD5 /* What is your name?.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1485015BB3DAF00380CD5 /* What is your name?.suess */; };
 		AFCB95E315BB322800669CA7 /* SSPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCB95E215BB322800669CA7 /* SSPopOverViewController.m */; };
@@ -66,6 +67,7 @@
 		9A3E36CA15BA755E00C3C268 /* SSStatementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatementView.m; sourceTree = "<group>"; };
 		9A3E36CC15BA758100C3C268 /* SSVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariableView.h; sourceTree = "<group>"; };
 		9A3E36CD15BA758100C3C268 /* SSVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariableView.m; sourceTree = "<group>"; };
+		9AB784AE15BBC703002CEE23 /* libsuess.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libsuess.a; path = Suess/build/Release/libsuess.a; sourceTree = "<group>"; };
 		9AE1484D15BB3D7800380CD5 /* Hello World.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hello World.suess"; sourceTree = "<group>"; };
 		9AE1485015BB3DAF00380CD5 /* What is your name?.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "What is your name?.suess"; sourceTree = "<group>"; };
 		AFCB95E115BB322700669CA7 /* SSPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPopOverViewController.h; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AB784AF15BBC703002CEE23 /* libsuess.a in Frameworks */,
 				9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */,
 				9A3E369415BA745700C3C268 /* Foundation.framework in Frameworks */,
 				9A3E369615BA745700C3C268 /* CoreGraphics.framework in Frameworks */,
@@ -121,6 +124,7 @@
 		9A3E369015BA745700C3C268 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AB784AE15BBC703002CEE23 /* libsuess.a */,
 				9A3E369115BA745700C3C268 /* UIKit.framework */,
 				9A3E369315BA745700C3C268 /* Foundation.framework */,
 				9A3E369515BA745700C3C268 /* CoreGraphics.framework */,
@@ -405,6 +409,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = Suess;
 				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -417,6 +422,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = Suess;
 				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
