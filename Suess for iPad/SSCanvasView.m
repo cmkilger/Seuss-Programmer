@@ -213,7 +213,42 @@
             
         case UIGestureRecognizerStateChanged: {
             self.movingVariable.center = point;
+
             // TODO: unprepare any previously prepared view, prepare the new view if needed
+            //SSStatementView * statementView = nil;
+            for (SSStatementView * tmpStatementView in self.statementViews) {
+                
+                if (CGRectContainsPoint(tmpStatementView.frame, point)) 
+                {
+                    if (tmpStatementView.bounds.size.width < 200) //temp.bounds.size.width < CGRectGetWidth(self.movingVariable.bounds) + 5) {
+                    { 
+                        [tmpStatementView prepareForVariablView:self.movingVariable atPoint:[self convertPoint:point toView:tmpStatementView]];
+                        
+                        [UIView animateWithDuration:0.1 animations:^{
+                            self.movingVariable.transform = CGAffineTransformIdentity;
+                            self.movingVariable.alpha = 1.0;
+                            self.movingVariable.center = point;
+                            self.movingVariable.layer.shadowOpacity = 0.6;
+                            //[self layoutStatements];
+                        }];
+                        
+                        break;
+                    }
+                    else 
+                    {
+                        //CGFloat tempStatementHeight = CGRectGetHeight(tmpStatementView.bounds);
+                        //CGRect statementThreshHold = tmpStatementView.frame;
+                        //statementThreshHold.size.width += 60;
+                        
+                        if (!CGRectContainsRect(tmpStatementView.frame, self.movingVariable.frame)) 
+                        {
+                            [tmpStatementView unprepare];
+                            break;                        
+                        }
+                    }                    
+                }
+            }
+            
         } break;
             
         case UIGestureRecognizerStateEnded: {
