@@ -11,6 +11,7 @@
 #import "SSVariableView.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import <Suess/Suess.h>
 
 @interface SSCanvasView ()
 
@@ -48,7 +49,7 @@
     CGRect mainViewFrame = self.bounds;
     mainViewFrame.size.width -= resevoirWidth;
     self.mainView = [[UIScrollView alloc] initWithFrame:mainViewFrame];
-    self.mainView.backgroundColor = [UIColor colorWithRed:0.9 green:1.0 blue:0.9 alpha:1.0];
+    self.mainView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.mainView];
     
     CGRect commandFrame = self.bounds;
@@ -127,7 +128,7 @@
                     [self.statementViews removeObject:movingView];
                 }
                 movingView.center = point;
-                [self addSubview:movingView];
+                [self.mainView addSubview:movingView];
                 self.movingStatement = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
@@ -293,8 +294,9 @@
         if (movingStatement && movingY < CGRectGetMidY(frame))
             frame.origin.y += movingHeight;
         statementView.frame = frame;
-        NSLog(@"%@", statementView);
     }
+    
+    self.mainView.contentSize = CGSizeMake(self.mainView.bounds.size.width, y+20);
 }
 
 - (void)layoutSubviews {
@@ -306,6 +308,7 @@
         statementView.frame = frame;
         y += 10 + CGRectGetHeight(frame);
     }
+    self.commandResevoir.contentSize = CGSizeMake(self.commandResevoir.bounds.size.width, y+20);
     
     y = 20;
     for (UIView * statementView in self.variableViews) {
@@ -315,8 +318,97 @@
         statementView.frame = frame;
         y += 10 + CGRectGetHeight(frame);
     }
+    self.variableResevoir.contentSize = CGSizeMake(self.variableResevoir.bounds.size.width, y+20);
     
     [self layoutStatements];
+}
+
+#pragma mark - Loading
+
+- (void)addStatement:(NSString *)name withVariable:(NSString *)parameter {
+    SSStatementView * statement = [[SSStatementView alloc] initWithStatement:name];
+    [self.statementViews addObject:statement];
+    [self.mainView addSubview:statement];
+    
+    SSVariableView * variable = [[SSVariableView alloc] initWithVariable:parameter];
+    [statement addVariableView:variable atIndex:0];
+}
+
+- (void)loadFileAtPath:(NSString *)path {
+    [self.statementViews removeAllObjects];
+    [self.commandViews removeAllObjects];
+    [self.variableViews removeAllObjects];
+    for (UIView * subview in [self.mainView subviews])
+        [subview removeFromSuperview];
+    for (UIView * subview in [self.commandResevoir subviews])
+        [subview removeFromSuperview];
+    for (UIView * subview in [self.variableResevoir subviews])
+        [subview removeFromSuperview];
+    
+    [self addStatement:@"Write"];
+    [self addStatement:@"Read"];
+    [self addVariable:@"new line"];
+    
+    SUString * file = SUStringCreate([path cStringUsingEncoding:NSUTF8StringEncoding]);
+    SUList * tokens = SUTokenizeFile(file);
+    SUList * errors = SUListCreate();
+    SUProgram * program = SUProgramCreate(tokens, errors);
+    
+    SUList * statements = SUProgramGetStatements(program);
+    SUIterator * statementIterator = SUListCreateIterator(statements);
+    SUStatement * statement = NULL;
+    while ((statement = SUIteratorNext(statementIterator))) {
+        SUList * signature = SUFunctionGetSignature(SUStatementGetFunction(statement));
+        SUList * words = SUListGetValueAtIndex(signature, 0);
+        SUString * name = SUListGetValueAtIndex(words, 0);
+        NSString * nameString = [NSString stringWithCString:SUStringGetCString(name) encoding:NSUTF8StringEncoding];
+        
+        SUList * parameters = SUStatementGetParameters(statement);
+        SUString * parameter = SUListGetValueAtIndex(parameters, 0);
+        NSString * parameterString = [NSString stringWithUTF8String:SUStringGetCString(parameter)];
+        
+        [self addStatement:nameString withVariable:parameterString];
+    }
+    
+    SUList * functions = SUProgramGetFunctions(program);
+    SUIterator * functionIterator = SUListCreateIterator(functions);
+    SUFunction * function = NULL;
+    while ((function = SUIteratorNext(functionIterator))) {
+        SUList * signature = SUFunctionGetSignature(function);
+        SUList * words = SUListGetValueAtIndex(signature, 0);
+        SUString * name = SUListGetValueAtIndex(words, 0);
+        NSString * nameString = [NSString stringWithUTF8String:SUStringGetCString(name)];
+        if (!([nameString isEqualToString:@"Write"] || [nameString isEqualToString:@"Read"]))
+            [self addStatement:nameString];
+    }
+    
+    SUList * variables = SUProgramGetVariables(program);
+    SUIterator * variableIterator = SUListCreateIterator(variables);
+    SUVariable * variable = NULL;
+    while ((variable = SUIteratorNext(variableIterator))) {
+        NSMutableString * nameString = [[NSMutableString alloc] init];
+        SUList * signature = SUVariableGetName(variable);
+        SUIterator * signatureIterator = SUListCreateIterator(signature);
+        SUToken * token = NULL;
+        while ((token = SUIteratorNext(signatureIterator))) {
+            SUString * name = SUTokenGetValue(token);
+            if ([nameString length] > 0)
+                [nameString appendString:@" "];
+            [nameString appendString:[NSString stringWithUTF8String:SUStringGetCString(name)]];
+        }
+        if (![nameString isEqualToString:@"new line"])
+            [self addVariable:nameString];
+        SURelease(signatureIterator);
+    }
+    
+    SURelease(functionIterator);
+    SURelease(statementIterator);
+    SURelease(file);
+    SURelease(tokens);
+    SURelease(errors);
+    SURelease(program);
+    
+    [self setNeedsLayout];
 }
 
 @end

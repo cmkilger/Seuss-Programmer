@@ -95,4 +95,8 @@
     }];     
 }
 
+- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index {
+    // TODO: 
+}
+
 @end

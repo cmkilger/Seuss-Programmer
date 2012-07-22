@@ -10,6 +10,7 @@
 
 @interface SSCanvasView : UIView
 
+- (void)loadFileAtPath:(NSString *)path;
 - (void)addStatement:(NSString *)statement;
 - (void)addVariable:(NSString *)statement;
 

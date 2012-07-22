@@ -11,17 +11,12 @@
 
 @class SSCanvasView;
 
-@interface SSViewController : UIViewController <FilePickerDelegate> {
-    SSPopOverViewController *_popOverViewController;
-    UIPopoverController *_documentPickerPopover;
-}
+@interface SSViewController : UIViewController <FilePickerDelegate>
 
 @property (weak, nonatomic) IBOutlet SSCanvasView *canvasView;
-@property (nonatomic, retain) SSPopOverViewController *popOverViewController;
-@property (nonatomic, retain) UIPopoverController *documentPickerPopover;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 - (IBAction)runButtonClicked:(id)sender;
-
 - (IBAction)buttonForPopOverClicked:(id)sender;
 
 @end

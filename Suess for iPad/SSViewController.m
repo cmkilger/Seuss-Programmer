@@ -10,11 +10,13 @@
 #import "SSCanvasView.h"
 #import "SSConsoleViewController.h"
 
-@interface SSViewController (){
-    NSString *contentOfFileSelected;
-}
+@interface SSViewController ()
 
 @property (strong) NSString * currentFilePath;
+@property (retain) SSPopOverViewController * popOverViewController;
+@property (retain) UIPopoverController * documentPickerPopover;
+
+- (void)loadFileAtPath:(NSString *)path;
 
 @end
 
@@ -23,20 +25,23 @@
 @synthesize popOverViewController = _popOverViewController;
 @synthesize documentPickerPopover = _documentPickerPopover;
 @synthesize currentFilePath = _currentFilePath;
-
-@synthesize canvasView;
+@synthesize canvasView = _canvasView;
+@synthesize navigationBar = _navigationBar;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.canvasView addStatement:@"Write"];
-    [self.canvasView addStatement:@"Read"];
-    [self.canvasView addVariable:@"new line"];
+    [self loadFileAtPath:[[NSBundle mainBundle] pathForResource:@"What is your name?.suess" ofType:nil]];
+}
+
+- (void)loadFileAtPath:(NSString *)path {
+    self.currentFilePath = path;
+    [self.canvasView loadFileAtPath:path];
+    self.navigationBar.topItem.title = [[path lastPathComponent] stringByDeletingPathExtension];
 }
 
 - (void)fileSelected:(NSString *)fileName{
-    self.currentFilePath = fileName;
-    contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
     [self.documentPickerPopover dismissPopoverAnimated:YES];
+    [self loadFileAtPath:fileName];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -45,6 +50,7 @@
 
 - (void)viewDidUnload {
     [self setCanvasView:nil];
+    [self setNavigationBar:nil];
     [super viewDidUnload];
 }
 

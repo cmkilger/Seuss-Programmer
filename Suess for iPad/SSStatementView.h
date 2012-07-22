@@ -15,6 +15,7 @@
 @property (readonly) NSString * statement;
 
 - (id)initWithStatement:(NSString *)statement;
+- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index;
 
 - (void)prepareForVariablView:(SSVariableView *)variableView atPoint:(CGPoint)point;
 - (void)addVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point;

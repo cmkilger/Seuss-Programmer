@@ -11,6 +11,7 @@
 @interface SSConsoleViewController : UIViewController <UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *consoleTextView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 - (id)initFilePath:(NSString *)file;
 - (IBAction)doneButtonClicked:(id)sender;

@@ -30,6 +30,7 @@ typedef void(^SSReadCallback)(NSString *);
 @synthesize text = _text;
 @synthesize readCallback = _readCallback;
 @synthesize consoleTextView = _consoleTextView;
+@synthesize navigationBar = _navigationBar;
 @synthesize textViewString = _textViewString;
 @synthesize editableLocation = _editableLocation;
 
@@ -57,6 +58,7 @@ SUString * SSReadString(void * data) {
 - (id)initFilePath:(NSString *)file {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        self.title = [[file lastPathComponent] stringByDeletingPathExtension];
         self.text = [[NSMutableString alloc] init];
         
         SUString * fileStr = SUStringCreate([file cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -89,6 +91,8 @@ SUString * SSReadString(void * data) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.consoleTextView.text = self.text;
+    self.navigationBar.topItem.title = self.title;
+    // TODO:    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChange) name:UIKeyboardDidShowNotification object:nil];
 }
 
 - (void)writeString:(NSString *)string {
@@ -123,6 +127,7 @@ SUString * SSReadString(void * data) {
 - (void)viewDidUnload {
     [self setConsoleTextView:nil];
     [self setConsoleTextView:nil];
+    [self setNavigationBar:nil];
     [super viewDidUnload];
 }
 
