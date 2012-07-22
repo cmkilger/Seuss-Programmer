@@ -189,8 +189,8 @@
                 SSVariableView * movingView = view;
                 if ([self.variableViews containsObject:movingView]) {
                     movingView = [[SSVariableView alloc] initWithVariable:view.variable];
-                    [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
-                    [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+                    [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
+                    [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
                     movingView.layer.shadowColor = [[UIColor blackColor] CGColor];
                     movingView.layer.shadowOpacity = 0.6;
                     movingView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
