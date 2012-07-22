@@ -436,12 +436,14 @@
 		9A3E36C115BA745700C3C268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Cory Kilger (P8H5EMA4P4)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
 				HEADER_SEARCH_PATHS = Suess;
 				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FF987F14-D1BF-4DA5-AF83-406CB0A37C3F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

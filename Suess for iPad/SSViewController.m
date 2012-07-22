@@ -30,7 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadFileAtPath:[[NSBundle mainBundle] pathForResource:@"What is your name?.suess" ofType:nil]];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"Hello World.suess" ofType:nil];
+    if (path)
+        [self loadFileAtPath:path];
 }
 
 - (void)loadFileAtPath:(NSString *)path {
