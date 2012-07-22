@@ -106,7 +106,7 @@ SUString * SSReadString(void * data) {
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (self.readCallback && range.location >= self.editableLocation) {
         if ([text isEqualToString:@"\n"]) {
-            NSString * input = [self.text substringFromIndex:self.editableLocation];\
+            NSString * input = [self.text substringFromIndex:self.editableLocation];
             self.readCallback(input);
             self.readCallback = nil;
         }
