@@ -14,7 +14,7 @@
 #define MIDDLE_PADDING 10.0
 #define RIGHT_PADDING 10.0
 
-#define FONT [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0]
+#define FONT [UIFont fontWithName:@"DoctorSoosLight" size:24.0]
 
 @interface SSStatementView ()
 
@@ -29,8 +29,8 @@
 @synthesize variableView = _variableView;
 
 - (id)initWithStatement:(NSString *)statement {
-//    for (NSString * familyName in [UIFont familyNames])
-//        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
+    for (NSString * familyName in [UIFont familyNames])
+        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
         
     CGSize size = [statement sizeWithFont:FONT];
     size.width += LEFT_PADDING + MIDDLE_PADDING + DEFAULT_VARIABLE_WIDTH + RIGHT_PADDING;
