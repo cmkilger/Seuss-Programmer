@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SSConsoleViewController : UIViewController <UITextFieldDelegate>{
-    
-}
+@interface SSConsoleViewController : UIViewController <UITextViewDelegate> 
 
 @property (strong, nonatomic) IBOutlet UITextView *consoleTextView;
+@property (strong, nonatomic) NSString *textViewString;
+@property (assign, nonatomic) NSRange editableLocation;
 
 @property (strong, nonatomic) NSString *writeString;
-@property (strong, nonatomic) NSString *readFromFileString;
 - (IBAction)doneButtonClicked:(id)sender;
 
 @end

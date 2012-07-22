@@ -25,8 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //contentOfFileSelected = [[NSString alloc] init];
-    
     [self.canvasView addStatement:@"Write"];
     [self.canvasView addStatement:@"Read"];
     [self.canvasView addVariable:@"new line"];
@@ -60,8 +58,9 @@
 
 - (IBAction)runButtonClicked:(id)sender {
     SSConsoleViewController * console = [[SSConsoleViewController alloc] initWithNibName:@"SSConsoleViewController" bundle:nil];
-    console.consoleTextView = contentOfFileSelected;
+    console.textViewString = contentOfFileSelected;
     [self presentModalViewController:console animated:YES];
+
 }
 
 - (IBAction)buttonForPopOverClicked:(id)sender {
