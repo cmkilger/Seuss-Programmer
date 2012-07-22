@@ -10,7 +10,9 @@
 #import "SSCanvasView.h"
 #import "SSConsoleViewController.h"
 
-@interface SSViewController ()
+@interface SSViewController (){
+    NSString *contentOfFileSelected;
+}
 
 @end
 
@@ -23,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //contentOfFileSelected = [[NSString alloc] init];
     
     [self.canvasView addStatement:@"Write"];
     [self.canvasView addStatement:@"Read"];
@@ -32,11 +35,16 @@
 - (void)fileSelected:(NSString *)fileName{
     //Just dismiss the popOverViewController.
     
-//    if ([fileName isEqualToString:@"Hello World"]) {
-//        NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
-//    } else if ([fileName isEqualToString:@"What is your name?"]) {
-//        NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
-//    }
+    
+   // if ([fileName isEqualToString:@"Hello World"]) {
+        contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
+        
+      //  NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
+    //} else if ([fileName isEqualToString:@"What is your name?"]) {
+     //   contentOfFileSelected = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
+
+       // NSLog(@"%@", [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil]);
+    //}
     
     [self.documentPickerPopover dismissPopoverAnimated:YES];
 }
@@ -52,6 +60,7 @@
 
 - (IBAction)runButtonClicked:(id)sender {
     SSConsoleViewController * console = [[SSConsoleViewController alloc] initWithNibName:@"SSConsoleViewController" bundle:nil];
+    console.consoleTextView = contentOfFileSelected;
     [self presentModalViewController:console animated:YES];
 }
 

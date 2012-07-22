@@ -15,13 +15,10 @@
 @interface SSPopOverViewController : UITableViewController {
     NSMutableArray *_documentFiles;
     id<FilePickerDelegate> _delegate;
-    //SSPopOverViewController *_tableView;
 }
 
 @property (nonatomic, retain) NSMutableArray *documentFiles;
-//@property (nonatomic, assign) id<FilePickerDelegate> delegate;
 @property (nonatomic) id<FilePickerDelegate> delegate;
-//@property (nonatomic, retain) SSPopOverViewController *tableView;
 
 
 
