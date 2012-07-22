@@ -26,6 +26,7 @@
     
     [self.canvasView addStatement:@"Write"];
     [self.canvasView addStatement:@"Read"];
+    [self.canvasView addVariable:@"new line"];
 }
 
 - (void)fileSelected:(NSString *)fileName{
