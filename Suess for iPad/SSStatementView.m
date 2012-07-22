@@ -42,11 +42,24 @@
     self = [super initWithFrame:CGRectIntegral(frame)];
     if (self) {
         _statement = statement;
-        self.backgroundColor = [UIColor blueColor];
-
+        self.backgroundColor = [UIColor clearColor];
+        
+        UIImageView *backgroundImg = nil;
+        
+        if ([statement isEqualToString:@"Write"]) 
+        {
+            backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"blue_sm_btn.png"]];
+        }
+        else if ([statement isEqualToString:@"Read"]) {
+            backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"green_btn_sm.png"]];
+        }
+        
+        [self addSubview:backgroundImg];
+        [self sendSubviewToBack:backgroundImg];    
+        
         UIFont * font = FONT;        
         CGSize size = [statement sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(10, 5, size.width, size.height));                
+        CGRect frame = CGRectIntegral(CGRectMake(15, 20, size.width, size.height));                
         UILabel *theStatement = [[UILabel alloc] initWithFrame:frame];
         theStatement.font = font;
         theStatement.backgroundColor = [UIColor clearColor];
