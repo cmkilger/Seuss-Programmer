@@ -1,6 +1,6 @@
 //
 //  SSViewController.m
-//  Suess for iPad
+//  Seuss for iPad
 //
 //  Created by Cory Kilger on 7/20/12.
 //  Copyright (c) 2012 Cory Kilger. All rights reserved.
@@ -30,7 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"Hello World.suess" ofType:nil];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"Hello World.seuss" ofType:nil];
     if (path)
         [self loadFileAtPath:path];
 }

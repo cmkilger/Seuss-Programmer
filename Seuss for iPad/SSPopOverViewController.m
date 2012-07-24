@@ -1,6 +1,6 @@
 //
 //  SSPopOverViewController.m
-//  Suess for iPad
+//  Seuss for iPad
 //
 //  Created by Renu Punjabi on 7/21/12.
 //  Copyright (c) 2012 Cory Kilger. All rights reserved.

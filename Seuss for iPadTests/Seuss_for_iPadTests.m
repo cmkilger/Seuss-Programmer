@@ -1,14 +1,14 @@
 //
-//  Suess_for_iPadTests.m
-//  Suess for iPadTests
+//  Seuss_for_iPadTests.m
+//  Seuss for iPadTests
 //
 //  Created by Cory Kilger on 7/20/12.
 //  Copyright (c) 2012 Cory Kilger. All rights reserved.
 //
 
-#import "Suess_for_iPadTests.h"
+#import "Seuss_for_iPadTests.h"
 
-@implementation Suess_for_iPadTests
+@implementation Seuss_for_iPadTests
 
 - (void)setUp
 {
@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in Suess for iPadTests");
+    STFail(@"Unit tests are not implemented yet in Seuss for iPadTests");
 }
 
 @end

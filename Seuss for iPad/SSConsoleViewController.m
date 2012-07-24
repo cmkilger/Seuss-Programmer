@@ -1,13 +1,13 @@
 //
 //  SSConsoleViewController.m
-//  Suess for iPad
+//  Seuss for iPad
 //
 //  Created by Renu Punjabi on 7/21/12.
 //  Copyright (c) 2012 Cory Kilger. All rights reserved.
 //
 
 #import "SSConsoleViewController.h"
-#import <Suess/Suess.h>
+#import <Seuss/Seuss.h>
 
 #define FONT [UIFont fontWithName:@"DoctorSoosLight" size:36.0]
 
