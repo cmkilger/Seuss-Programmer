@@ -2,7 +2,6 @@ Write "Hello! Please enter your name: ".
 Read name.
 Write "Hello ".
 Write name.
-Write and.
 Write ", Enter the following.".
 Write new line.
 

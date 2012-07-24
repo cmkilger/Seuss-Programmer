@@ -14,7 +14,7 @@
 #define MIDDLE_PADDING 10.0
 #define RIGHT_PADDING 10.0
 
-#define FONT [UIFont fontWithName:@"DoctorSoosLight" size:24.0]
+#define FONT [UIFont fontWithName:@"DoctorSoosLight" size:28.0]
 
 @interface SSStatementView ()
 
@@ -29,12 +29,12 @@
 @synthesize variableView = _variableView;
 
 - (id)initWithStatement:(NSString *)statement {
-    for (NSString * familyName in [UIFont familyNames])
-        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
+//    for (NSString * familyName in [UIFont familyNames])
+//        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
         
     CGSize size = [statement sizeWithFont:FONT];
     size.width += LEFT_PADDING + MIDDLE_PADDING + DEFAULT_VARIABLE_WIDTH + RIGHT_PADDING;
-    size.height += 10;
+    size.height = 60;
     
     CGRect frame = CGRectZero;
     frame.size = size;
@@ -44,22 +44,27 @@
         _statement = statement;
         self.backgroundColor = [UIColor clearColor];
         
-        UIImageView *backgroundImg = nil;
+        UIImage * img = nil;
         
         if ([statement isEqualToString:@"Write"]) 
         {
-            backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"blue_sm_btn.png"]];
+            img = [UIImage imageNamed:@"blue_sm_btn.png"];
         }
         else if ([statement isEqualToString:@"Read"]) {
-            backgroundImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"green_btn_sm.png"]];
+            img = [UIImage imageNamed:@"green_btn_sm.png"];
         }
         
-        [self addSubview:backgroundImg];
-        [self sendSubviewToBack:backgroundImg];    
+        img = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 40)];
+        UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:img];
+        
+        backgroundImg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        backgroundImg.frame = self.bounds;
+        
+        [self insertSubview:backgroundImg atIndex:0];
         
         UIFont * font = FONT;        
         CGSize size = [statement sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(15, 20, size.width, size.height));                
+        CGRect frame = CGRectIntegral(CGRectMake(15, 16, size.width, size.height));                
         UILabel *theStatement = [[UILabel alloc] initWithFrame:frame];
         theStatement.font = font;
         theStatement.backgroundColor = [UIColor clearColor];

@@ -269,7 +269,7 @@
         CGRect frame = statementView.frame;
         frame.origin.x = 30;
         frame.origin.y = y;
-        y += 14 + frame.size.height;
+        y += frame.size.height;
         if (movingStatement && movingY < CGRectGetMidY(frame))
             frame.origin.y += movingHeight;
         statementView.frame = frame;
@@ -348,8 +348,24 @@
         NSString * nameString = [NSString stringWithCString:SUStringGetCString(name) encoding:NSUTF8StringEncoding];
         
         SUList * parameters = SUStatementGetParameters(statement);
-        SUString * parameter = SUListGetValueAtIndex(parameters, 0);
-        NSString * parameterString = [NSString stringWithUTF8String:SUStringGetCString(parameter)];
+        SUTypeRef parameter = SUListGetValueAtIndex(parameters, 0);
+        NSString * parameterString = nil;
+        if (SUTypeIsVariable(parameter)) {
+            SUList * name = SUVariableGetName((SUVariable*)parameter);
+            NSMutableString * string = [NSMutableString string];
+            SUToken * word = NULL;
+            SUIterator * wordIterator = SUListCreateIterator(name);
+            while ((word = SUIteratorNext(wordIterator))) {
+                if ([string length] > 0)
+                    [string appendString:@" "];
+                [string appendString:[NSString stringWithCString:SUStringGetCString(SUTokenGetValue(word)) encoding:NSUTF8StringEncoding]];
+            }
+            SURelease(wordIterator);
+            parameterString = string;
+        }
+        else {
+            parameterString = [NSString stringWithUTF8String:SUStringGetCString(parameter)];
+        }
         
         [self addStatement:nameString withVariable:parameterString];
     }

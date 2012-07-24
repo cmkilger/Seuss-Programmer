@@ -22,7 +22,7 @@
     //    for (NSString * familyName in [UIFont familyNames])
     //        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
     
-    CGSize size = [variable sizeWithFont:[UIFont fontWithName:@"DoctorSoosLight" size:24.0]];
+    CGSize size = [variable sizeWithFont:[UIFont fontWithName:@"DoctorSoosLight" size:28.0]];
     size.width += 20;
     size.height = 47;
     
@@ -40,9 +40,9 @@
         [self addSubview:backgroundImgView];
         [self sendSubviewToBack:backgroundImgView];    
         
-        UIFont * font = [UIFont fontWithName:@"DoctorSoosLight" size:24.0];        
+        UIFont * font = [UIFont fontWithName:@"DoctorSoosLight" size:28.0];        
         CGSize size = [variable sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(10, 11, size.width, size.height));                
+        CGRect frame = CGRectIntegral(CGRectMake(10, 8, size.width, size.height));                
         UILabel *theVariable = [[UILabel alloc] initWithFrame:frame];
         theVariable.font = font;
         theVariable.backgroundColor = [UIColor clearColor];
