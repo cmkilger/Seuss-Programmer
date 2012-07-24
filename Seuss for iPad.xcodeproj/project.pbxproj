@@ -25,15 +25,15 @@
 		9A3E36B115BA745700C3C268 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369115BA745700C3C268 /* UIKit.framework */; };
 		9A3E36B215BA745700C3C268 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369315BA745700C3C268 /* Foundation.framework */; };
 		9A3E36BA15BA745700C3C268 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A3E36B815BA745700C3C268 /* InfoPlist.strings */; };
-		9A3E36BD15BA745700C3C268 /* Suess_for_iPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36BC15BA745700C3C268 /* Suess_for_iPadTests.m */; };
+		9A3E36BD15BA745700C3C268 /* Seuss_for_iPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36BC15BA745700C3C268 /* Seuss_for_iPadTests.m */; };
 		9A3E36C815BA74E400C3C268 /* SSCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36C715BA74E400C3C268 /* SSCanvasView.m */; };
 		9A3E36CB15BA755E00C3C268 /* SSStatementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CA15BA755E00C3C268 /* SSStatementView.m */; };
 		9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CD15BA758100C3C268 /* SSVariableView.m */; };
-		9A60A07415BC023100DC261F /* Story.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9A60A07315BC023100DC261F /* Story.suess */; };
+		9A60A07415BC023100DC261F /* Story.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9A60A07315BC023100DC261F /* Story.seuss */; };
 		9A86773D15BBE81300BBDAEE /* SSConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */; };
-		9AB784AF15BBC703002CEE23 /* libsuess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB784AE15BBC703002CEE23 /* libsuess.a */; };
-		9AE1484E15BB3D7800380CD5 /* Hello World.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1484D15BB3D7800380CD5 /* Hello World.suess */; };
-		9AE1485115BB3DAF00380CD5 /* Name.suess in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1485015BB3DAF00380CD5 /* Name.suess */; };
+		9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB784AE15BBC703002CEE23 /* libseuss.a */; };
+		9AE1484E15BB3D7800380CD5 /* Hello World.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1484D15BB3D7800380CD5 /* Hello World.seuss */; };
+		9AE1485115BB3DAF00380CD5 /* Name.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1485015BB3DAF00380CD5 /* Name.seuss */; };
 		AFCB95E315BB322800669CA7 /* SSPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCB95E215BB322800669CA7 /* SSPopOverViewController.m */; };
 		AFCB95FC15BB7B6700669CA7 /* SSConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCB95FA15BB7B6700669CA7 /* SSConsoleViewController.m */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,7 @@
 			containerPortal = 9A3E368415BA745700C3C268 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9A3E368C15BA745700C3C268;
-			remoteInfo = "Suess for iPad";
+			remoteInfo = "Seuss for iPad";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -55,36 +55,36 @@
 		32C8931A15BCA72C0021E88E /* run_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run_bg.png; sourceTree = "<group>"; };
 		32C8931C15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Doctor Soos Light 1.1.ttf"; sourceTree = "<group>"; };
 		32EFE91815BC84770015456F /* workarea_bg_only.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workarea_bg_only.png; sourceTree = "<group>"; };
-		9A3E368D15BA745700C3C268 /* Suess for iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Suess for iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3E368D15BA745700C3C268 /* Seuss for iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seuss for iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3E369115BA745700C3C268 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9A3E369315BA745700C3C268 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9A3E369515BA745700C3C268 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		9A3E369915BA745700C3C268 /* Suess for iPad-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Suess for iPad-Info.plist"; sourceTree = "<group>"; };
+		9A3E369915BA745700C3C268 /* Seuss for iPad-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Seuss for iPad-Info.plist"; sourceTree = "<group>"; };
 		9A3E369B15BA745700C3C268 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9A3E369D15BA745700C3C268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9A3E369F15BA745700C3C268 /* Suess for iPad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Suess for iPad-Prefix.pch"; sourceTree = "<group>"; };
+		9A3E369F15BA745700C3C268 /* Seuss for iPad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Seuss for iPad-Prefix.pch"; sourceTree = "<group>"; };
 		9A3E36A015BA745700C3C268 /* SSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAppDelegate.h; sourceTree = "<group>"; };
 		9A3E36A115BA745700C3C268 /* SSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
 		9A3E36A315BA745700C3C268 /* SSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSViewController.h; sourceTree = "<group>"; };
 		9A3E36A415BA745700C3C268 /* SSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSViewController.m; sourceTree = "<group>"; };
 		9A3E36A715BA745700C3C268 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSViewController.xib; sourceTree = "<group>"; };
-		9A3E36AE15BA745700C3C268 /* Suess for iPadTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Suess for iPadTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3E36AE15BA745700C3C268 /* Seuss for iPadTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Seuss for iPadTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3E36AF15BA745700C3C268 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		9A3E36B715BA745700C3C268 /* Suess for iPadTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Suess for iPadTests-Info.plist"; sourceTree = "<group>"; };
+		9A3E36B715BA745700C3C268 /* Seuss for iPadTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Seuss for iPadTests-Info.plist"; sourceTree = "<group>"; };
 		9A3E36B915BA745700C3C268 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9A3E36BB15BA745700C3C268 /* Suess_for_iPadTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suess_for_iPadTests.h; sourceTree = "<group>"; };
-		9A3E36BC15BA745700C3C268 /* Suess_for_iPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Suess_for_iPadTests.m; sourceTree = "<group>"; };
+		9A3E36BB15BA745700C3C268 /* Seuss_for_iPadTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Seuss_for_iPadTests.h; sourceTree = "<group>"; };
+		9A3E36BC15BA745700C3C268 /* Seuss_for_iPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Seuss_for_iPadTests.m; sourceTree = "<group>"; };
 		9A3E36C615BA74E400C3C268 /* SSCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCanvasView.h; sourceTree = "<group>"; };
 		9A3E36C715BA74E400C3C268 /* SSCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCanvasView.m; sourceTree = "<group>"; };
 		9A3E36C915BA755E00C3C268 /* SSStatementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSStatementView.h; sourceTree = "<group>"; };
 		9A3E36CA15BA755E00C3C268 /* SSStatementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatementView.m; sourceTree = "<group>"; };
 		9A3E36CC15BA758100C3C268 /* SSVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariableView.h; sourceTree = "<group>"; };
 		9A3E36CD15BA758100C3C268 /* SSVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariableView.m; sourceTree = "<group>"; };
-		9A60A07315BC023100DC261F /* Story.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Story.suess; sourceTree = "<group>"; };
+		9A60A07315BC023100DC261F /* Story.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Story.seuss; sourceTree = "<group>"; };
 		9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSConsoleViewController.xib; sourceTree = "<group>"; };
-		9AB784AE15BBC703002CEE23 /* libsuess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsuess.a; path = Suess/build/Release/libsuess.a; sourceTree = "<group>"; };
-		9AE1484D15BB3D7800380CD5 /* Hello World.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hello World.suess"; sourceTree = "<group>"; };
-		9AE1485015BB3DAF00380CD5 /* Name.suess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Name.suess; sourceTree = "<group>"; };
+		9AB784AE15BBC703002CEE23 /* libseuss.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libseuss.a; path = Seuss/build/Release/libseuss.a; sourceTree = "<group>"; };
+		9AE1484D15BB3D7800380CD5 /* Hello World.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hello World.seuss"; sourceTree = "<group>"; };
+		9AE1485015BB3DAF00380CD5 /* Name.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Name.seuss; sourceTree = "<group>"; };
 		AFCB95E115BB322700669CA7 /* SSPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPopOverViewController.h; sourceTree = "<group>"; };
 		AFCB95E215BB322800669CA7 /* SSPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPopOverViewController.m; sourceTree = "<group>"; };
 		AFCB95F915BB7B6700669CA7 /* SSConsoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSConsoleViewController.h; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AB784AF15BBC703002CEE23 /* libsuess.a in Frameworks */,
+				9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */,
 				9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */,
 				9A3E369415BA745700C3C268 /* Foundation.framework in Frameworks */,
 				9A3E369615BA745700C3C268 /* CoreGraphics.framework in Frameworks */,
@@ -127,15 +127,15 @@
 				32EFE91815BC84770015456F /* workarea_bg_only.png */,
 			);
 			name = Resources;
-			path = "Suess for iPad";
+			path = "Seuss for iPad";
 			sourceTree = "<group>";
 		};
 		9A3E368215BA745700C3C268 = {
 			isa = PBXGroup;
 			children = (
-				9A3E369715BA745700C3C268 /* Suess for iPad */,
+				9A3E369715BA745700C3C268 /* Seuss for iPad */,
 				32EFE91515BC80C00015456F /* Resources */,
-				9A3E36B515BA745700C3C268 /* Suess for iPadTests */,
+				9A3E36B515BA745700C3C268 /* Seuss for iPadTests */,
 				9A3E369015BA745700C3C268 /* Frameworks */,
 				9A3E368E15BA745700C3C268 /* Products */,
 			);
@@ -144,8 +144,8 @@
 		9A3E368E15BA745700C3C268 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A3E368D15BA745700C3C268 /* Suess for iPad.app */,
-				9A3E36AE15BA745700C3C268 /* Suess for iPadTests.octest */,
+				9A3E368D15BA745700C3C268 /* Seuss for iPad.app */,
+				9A3E36AE15BA745700C3C268 /* Seuss for iPadTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,7 +153,7 @@
 		9A3E369015BA745700C3C268 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9AB784AE15BBC703002CEE23 /* libsuess.a */,
+				9AB784AE15BBC703002CEE23 /* libseuss.a */,
 				9A3E369115BA745700C3C268 /* UIKit.framework */,
 				9A3E369315BA745700C3C268 /* Foundation.framework */,
 				9A3E369515BA745700C3C268 /* CoreGraphics.framework */,
@@ -162,7 +162,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9A3E369715BA745700C3C268 /* Suess for iPad */ = {
+		9A3E369715BA745700C3C268 /* Seuss for iPad */ = {
 			isa = PBXGroup;
 			children = (
 				9A3E36A015BA745700C3C268 /* SSAppDelegate.h */,
@@ -182,38 +182,38 @@
 				9A3E36CA15BA755E00C3C268 /* SSStatementView.m */,
 				9A3E36CC15BA758100C3C268 /* SSVariableView.h */,
 				9A3E36CD15BA758100C3C268 /* SSVariableView.m */,
-				9AE1484D15BB3D7800380CD5 /* Hello World.suess */,
-				9AE1485015BB3DAF00380CD5 /* Name.suess */,
-				9A60A07315BC023100DC261F /* Story.suess */,
+				9AE1484D15BB3D7800380CD5 /* Hello World.seuss */,
+				9AE1485015BB3DAF00380CD5 /* Name.seuss */,
+				9A60A07315BC023100DC261F /* Story.seuss */,
 			);
-			path = "Suess for iPad";
+			path = "Seuss for iPad";
 			sourceTree = "<group>";
 		};
 		9A3E369815BA745700C3C268 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9A3E369915BA745700C3C268 /* Suess for iPad-Info.plist */,
+				9A3E369915BA745700C3C268 /* Seuss for iPad-Info.plist */,
 				9A3E369A15BA745700C3C268 /* InfoPlist.strings */,
 				9A3E369D15BA745700C3C268 /* main.m */,
-				9A3E369F15BA745700C3C268 /* Suess for iPad-Prefix.pch */,
+				9A3E369F15BA745700C3C268 /* Seuss for iPad-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9A3E36B515BA745700C3C268 /* Suess for iPadTests */ = {
+		9A3E36B515BA745700C3C268 /* Seuss for iPadTests */ = {
 			isa = PBXGroup;
 			children = (
-				9A3E36BB15BA745700C3C268 /* Suess_for_iPadTests.h */,
-				9A3E36BC15BA745700C3C268 /* Suess_for_iPadTests.m */,
+				9A3E36BB15BA745700C3C268 /* Seuss_for_iPadTests.h */,
+				9A3E36BC15BA745700C3C268 /* Seuss_for_iPadTests.m */,
 				9A3E36B615BA745700C3C268 /* Supporting Files */,
 			);
-			path = "Suess for iPadTests";
+			path = "Seuss for iPadTests";
 			sourceTree = "<group>";
 		};
 		9A3E36B615BA745700C3C268 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9A3E36B715BA745700C3C268 /* Suess for iPadTests-Info.plist */,
+				9A3E36B715BA745700C3C268 /* Seuss for iPadTests-Info.plist */,
 				9A3E36B815BA745700C3C268 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -222,9 +222,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9A3E368C15BA745700C3C268 /* Suess for iPad */ = {
+		9A3E368C15BA745700C3C268 /* Seuss for iPad */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A3E36C015BA745700C3C268 /* Build configuration list for PBXNativeTarget "Suess for iPad" */;
+			buildConfigurationList = 9A3E36C015BA745700C3C268 /* Build configuration list for PBXNativeTarget "Seuss for iPad" */;
 			buildPhases = (
 				9A3E368915BA745700C3C268 /* Sources */,
 				9A3E368A15BA745700C3C268 /* Frameworks */,
@@ -234,14 +234,14 @@
 			);
 			dependencies = (
 			);
-			name = "Suess for iPad";
-			productName = "Suess for iPad";
-			productReference = 9A3E368D15BA745700C3C268 /* Suess for iPad.app */;
+			name = "Seuss for iPad";
+			productName = "Seuss for iPad";
+			productReference = 9A3E368D15BA745700C3C268 /* Seuss for iPad.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9A3E36AD15BA745700C3C268 /* Suess for iPadTests */ = {
+		9A3E36AD15BA745700C3C268 /* Seuss for iPadTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A3E36C315BA745700C3C268 /* Build configuration list for PBXNativeTarget "Suess for iPadTests" */;
+			buildConfigurationList = 9A3E36C315BA745700C3C268 /* Build configuration list for PBXNativeTarget "Seuss for iPadTests" */;
 			buildPhases = (
 				9A3E36A915BA745700C3C268 /* Sources */,
 				9A3E36AA15BA745700C3C268 /* Frameworks */,
@@ -253,9 +253,9 @@
 			dependencies = (
 				9A3E36B415BA745700C3C268 /* PBXTargetDependency */,
 			);
-			name = "Suess for iPadTests";
-			productName = "Suess for iPadTests";
-			productReference = 9A3E36AE15BA745700C3C268 /* Suess for iPadTests.octest */;
+			name = "Seuss for iPadTests";
+			productName = "Seuss for iPadTests";
+			productReference = 9A3E36AE15BA745700C3C268 /* Seuss for iPadTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -268,7 +268,7 @@
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Cory Kilger";
 			};
-			buildConfigurationList = 9A3E368715BA745700C3C268 /* Build configuration list for PBXProject "Suess for iPad" */;
+			buildConfigurationList = 9A3E368715BA745700C3C268 /* Build configuration list for PBXProject "Seuss for iPad" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -280,8 +280,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9A3E368C15BA745700C3C268 /* Suess for iPad */,
-				9A3E36AD15BA745700C3C268 /* Suess for iPadTests */,
+				9A3E368C15BA745700C3C268 /* Seuss for iPad */,
+				9A3E36AD15BA745700C3C268 /* Seuss for iPadTests */,
 			);
 		};
 /* End PBXProject section */
@@ -293,10 +293,10 @@
 			files = (
 				9A3E369C15BA745700C3C268 /* InfoPlist.strings in Resources */,
 				9A3E36A815BA745700C3C268 /* SSViewController.xib in Resources */,
-				9AE1484E15BB3D7800380CD5 /* Hello World.suess in Resources */,
-				9AE1485115BB3DAF00380CD5 /* Name.suess in Resources */,
+				9AE1484E15BB3D7800380CD5 /* Hello World.seuss in Resources */,
+				9AE1485115BB3DAF00380CD5 /* Name.seuss in Resources */,
 				9A86773D15BBE81300BBDAEE /* SSConsoleViewController.xib in Resources */,
-				9A60A07415BC023100DC261F /* Story.suess in Resources */,
+				9A60A07415BC023100DC261F /* Story.seuss in Resources */,
 				32EFE91915BC84770015456F /* workarea_bg_only.png in Resources */,
 				3215DD2B15BC8E0A00C2610C /* variable_bg.png in Resources */,
 				3215DD2E15BC8E1E00C2610C /* blue_sm_btn.png in Resources */,
@@ -352,7 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A3E36BD15BA745700C3C268 /* Suess_for_iPadTests.m in Sources */,
+				9A3E36BD15BA745700C3C268 /* Seuss_for_iPadTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +361,7 @@
 /* Begin PBXTargetDependency section */
 		9A3E36B415BA745700C3C268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9A3E368C15BA745700C3C268 /* Suess for iPad */;
+			target = 9A3E368C15BA745700C3C268 /* Seuss for iPad */;
 			targetProxy = 9A3E36B315BA745700C3C268 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -445,9 +445,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
-				HEADER_SEARCH_PATHS = Suess;
-				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
+				GCC_PREFIX_HEADER = "Seuss for iPad/Seuss for iPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = Seuss;
+				INFOPLIST_FILE = "Seuss for iPad/Seuss for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -458,9 +458,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
-				HEADER_SEARCH_PATHS = Suess;
-				INFOPLIST_FILE = "Suess for iPad/Suess for iPad-Info.plist";
+				GCC_PREFIX_HEADER = "Seuss for iPad/Seuss for iPad-Prefix.pch";
+				HEADER_SEARCH_PATHS = Seuss;
+				INFOPLIST_FILE = "Seuss for iPad/Seuss for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -470,14 +470,14 @@
 		9A3E36C415BA745700C3C268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Suess for iPad.app/Suess for iPad";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Seuss for iPad.app/Seuss for iPad";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
-				INFOPLIST_FILE = "Suess for iPadTests/Suess for iPadTests-Info.plist";
+				GCC_PREFIX_HEADER = "Seuss for iPad/Seuss for iPad-Prefix.pch";
+				INFOPLIST_FILE = "Seuss for iPadTests/Seuss for iPadTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -487,14 +487,14 @@
 		9A3E36C515BA745700C3C268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Suess for iPad.app/Suess for iPad";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Seuss for iPad.app/Seuss for iPad";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Suess for iPad/Suess for iPad-Prefix.pch";
-				INFOPLIST_FILE = "Suess for iPadTests/Suess for iPadTests-Info.plist";
+				GCC_PREFIX_HEADER = "Seuss for iPad/Seuss for iPad-Prefix.pch";
+				INFOPLIST_FILE = "Seuss for iPadTests/Seuss for iPadTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -504,7 +504,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A3E368715BA745700C3C268 /* Build configuration list for PBXProject "Suess for iPad" */ = {
+		9A3E368715BA745700C3C268 /* Build configuration list for PBXProject "Seuss for iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A3E36BE15BA745700C3C268 /* Debug */,
@@ -513,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A3E36C015BA745700C3C268 /* Build configuration list for PBXNativeTarget "Suess for iPad" */ = {
+		9A3E36C015BA745700C3C268 /* Build configuration list for PBXNativeTarget "Seuss for iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A3E36C115BA745700C3C268 /* Debug */,
@@ -522,7 +522,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A3E36C315BA745700C3C268 /* Build configuration list for PBXNativeTarget "Suess for iPadTests" */ = {
+		9A3E36C315BA745700C3C268 /* Build configuration list for PBXNativeTarget "Seuss for iPadTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A3E36C415BA745700C3C268 /* Debug */,
