@@ -117,7 +117,7 @@
 
 - (void)moveStatement:(UIGestureRecognizer *)gesture {
     SSStatementView * view = (SSStatementView *)[gesture view];
-    CGPoint point = [gesture locationInView:self];
+    CGPoint point = [gesture locationInView:self.mainView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
             if (!self.movingStatement) {
@@ -171,6 +171,8 @@
                     movingView.center = point;
                     movingView.layer.shadowOpacity = 0.6;
                     [self layoutStatements];
+                } completion:^(BOOL finished) {
+                    [movingView removeFromSuperview];
                 }];
             }
             else {
@@ -178,8 +180,9 @@
                     movingView.transform = CGAffineTransformMakeScale(3.0, 3.0);
                     movingView.alpha = 0.0;
                     movingView.center = point;
+                    [self layoutStatements];
                 } completion:^(BOOL finished) {
-                    [self.movingStatement removeFromSuperview];
+                    [movingView removeFromSuperview];
                 }];
             }
         } break;
@@ -191,7 +194,7 @@
 
 - (void)moveVariable:(UIGestureRecognizer *)gesture {
     SSVariableView * view = (SSVariableView *)[gesture view];
-    CGPoint point = [gesture locationInView:self];
+    CGPoint point = [gesture locationInView:self.mainView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
             if (!self.movingVariable) {
@@ -210,7 +213,7 @@
                     // TODO: remove from the statement
                 }
                 movingView.center = point;
-                [self addSubview:movingView];
+                [self.mainView addSubview:movingView];
                 self.movingVariable = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
@@ -250,7 +253,7 @@
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.alpha = 0.0;
                 } completion:^(BOOL finished) {
-                    [self.movingVariable removeFromSuperview];
+                    [movingView removeFromSuperview];
                 }];
             }
         } break;
