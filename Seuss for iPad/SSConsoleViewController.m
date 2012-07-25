@@ -54,6 +54,7 @@ SUString * SSReadString(void * data) {
         }];
     });
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    dispatch_release(semaphore);
     return SUStringCreate([string cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 

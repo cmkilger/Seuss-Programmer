@@ -404,6 +404,7 @@
         SURelease(signatureIterator);
     }
     
+    SURelease(variableIterator);
     SURelease(functionIterator);
     SURelease(statementIterator);
     SURelease(file);
