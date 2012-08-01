@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class SSCommand;
+@class SSVariable;
+
 @interface SSCanvasView : UIView
 
 - (void)loadFileAtPath:(NSString *)path;
-- (void)addStatement:(NSString *)statement;
-- (void)addVariable:(NSString *)statement;
 
 @end

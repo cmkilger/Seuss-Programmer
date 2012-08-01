@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class SSVariable;
+
 @interface SSVariableView : UIView
 
-@property (readonly) NSString * variable;
+@property (readonly) SSVariable * variable;
 
-- (id)initWithVariable:(NSString *)variable;
+- (id)initWithVariable:(SSVariable *)variable;
 
 @end

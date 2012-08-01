@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="SSCommand" representedClassName="SSCommand" syncable="YES">
+        <attribute name="builtin" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <relationship name="parameters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSParameter" inverseName="command" inverseEntity="SSParameter" syncable="YES"/>
+        <relationship name="program" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SSProgram" inverseName="commands" inverseEntity="SSProgram" syncable="YES"/>
+        <relationship name="signature" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSString" inverseName="command" inverseEntity="SSString" syncable="YES"/>
+        <relationship name="statements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSStatement" inverseName="command" inverseEntity="SSStatement" syncable="YES"/>
+    </entity>
+    <entity name="SSParameter" representedClassName="SSParameter" syncable="YES">
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="command" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="SSCommand" inverseName="parameters" inverseEntity="SSCommand" syncable="YES"/>
+        <relationship name="statement" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="SSStatement" inverseName="parameters" inverseEntity="SSStatement" syncable="YES"/>
+        <relationship name="string" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSString" inverseName="parameter" inverseEntity="SSString" syncable="YES"/>
+        <relationship name="variable" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSVariable" inverseName="parameters" inverseEntity="SSVariable" syncable="YES"/>
+    </entity>
+    <entity name="SSProgram" representedClassName="SSProgram" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="commands" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSCommand" inverseName="program" inverseEntity="SSCommand" syncable="YES"/>
+        <relationship name="statements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSStatement" inverseName="program" inverseEntity="SSStatement" syncable="YES"/>
+    </entity>
+    <entity name="SSStatement" representedClassName="SSStatement" syncable="YES">
+        <attribute name="line" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="command" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSCommand" inverseName="statements" inverseEntity="SSCommand" syncable="YES"/>
+        <relationship name="parameters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSParameter" inverseName="statement" inverseEntity="SSParameter" syncable="YES"/>
+        <relationship name="program" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="SSProgram" inverseName="statements" inverseEntity="SSProgram" syncable="YES"/>
+    </entity>
+    <entity name="SSString" representedClassName="SSString" syncable="YES">
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="command" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="SSCommand" inverseName="signature" inverseEntity="SSCommand" syncable="YES"/>
+        <relationship name="parameter" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSParameter" inverseName="string" inverseEntity="SSParameter" syncable="YES"/>
+    </entity>
+    <entity name="SSVariable" representedClassName="SSVariable" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parameters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SSParameter" inverseName="variable" inverseEntity="SSParameter" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SSCommand" positionX="-3224" positionY="-5412" width="128" height="120"/>
+        <element name="SSParameter" positionX="-2664" positionY="-5355" width="128" height="105"/>
+        <element name="SSProgram" positionX="-3438" positionY="-5616" width="128" height="90"/>
+        <element name="SSStatement" positionX="-2927" positionY="-5544" width="128" height="120"/>
+        <element name="SSString" positionX="-3422" positionY="-5265" width="128" height="90"/>
+        <element name="SSVariable" positionX="-3024" positionY="-5184" width="128" height="75"/>
+    </elements>
+</model>

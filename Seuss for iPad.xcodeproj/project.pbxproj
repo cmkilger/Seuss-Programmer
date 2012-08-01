@@ -29,9 +29,26 @@
 		9A3E36C815BA74E400C3C268 /* SSCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36C715BA74E400C3C268 /* SSCanvasView.m */; };
 		9A3E36CB15BA755E00C3C268 /* SSStatementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CA15BA755E00C3C268 /* SSStatementView.m */; };
 		9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CD15BA758100C3C268 /* SSVariableView.m */; };
+		9A599F1015C26B72000DED43 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F0E15C26B72000DED43 /* Model.xcdatamodeld */; };
+		9A599F3915C315E9000DED43 /* SSProgram+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F3815C315E9000DED43 /* SSProgram+Additions.m */; };
+		9A599F4E15C4886B000DED43 /* NSManagedObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F4D15C4886B000DED43 /* NSManagedObject+Additions.m */; };
+		9A599F8715C4A529000DED43 /* SSCommand+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F8615C4A529000DED43 /* SSCommand+Additions.m */; };
+		9A599F8915C50C2E000DED43 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A599F8815C50C2E000DED43 /* CoreData.framework */; };
 		9A60A07415BC023100DC261F /* Story.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9A60A07315BC023100DC261F /* Story.seuss */; };
 		9A86773D15BBE81300BBDAEE /* SSConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */; };
+		9A9EFEE715C8F58000C04826 /* SSStringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9EFEE615C8F58000C04826 /* SSStringView.m */; };
+		9A9EFEE915C8F77900C04826 /* string_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A9EFEE815C8F77900C04826 /* string_bg.png */; };
 		9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB784AE15BBC703002CEE23 /* libseuss.a */; };
+		9ACE27B215C66FEE00D7112F /* SSCommandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27B115C66FEE00D7112F /* SSCommandView.m */; };
+		9ACE27B615C848A400D7112F /* SSVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27B515C848A400D7112F /* SSVariable.m */; };
+		9ACE27B915C848A600D7112F /* SSProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27B815C848A600D7112F /* SSProgram.m */; };
+		9ACE27BC15C848A600D7112F /* SSString.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27BB15C848A600D7112F /* SSString.m */; };
+		9ACE27BF15C848A600D7112F /* SSParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27BE15C848A600D7112F /* SSParameter.m */; };
+		9ACE27C215C848A600D7112F /* SSCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27C115C848A600D7112F /* SSCommand.m */; };
+		9ACE27C515C848A600D7112F /* SSStatement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27C415C848A600D7112F /* SSStatement.m */; };
+		9ACE27C815C848FB00D7112F /* SSVariable+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27C715C848FB00D7112F /* SSVariable+Additions.m */; };
+		9ACE27CB15C874C100D7112F /* SSParameter+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27CA15C874C100D7112F /* SSParameter+Additions.m */; };
+		9ACE27CF15C87A9C00D7112F /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27CE15C87A9C00D7112F /* NSString+Additions.m */; };
 		9AE1484E15BB3D7800380CD5 /* Hello World.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1484D15BB3D7800380CD5 /* Hello World.seuss */; };
 		9AE1485115BB3DAF00380CD5 /* Name.seuss in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1485015BB3DAF00380CD5 /* Name.seuss */; };
 		AFCB95E315BB322800669CA7 /* SSPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCB95E215BB322800669CA7 /* SSPopOverViewController.m */; };
@@ -80,9 +97,41 @@
 		9A3E36CA15BA755E00C3C268 /* SSStatementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatementView.m; sourceTree = "<group>"; };
 		9A3E36CC15BA758100C3C268 /* SSVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariableView.h; sourceTree = "<group>"; };
 		9A3E36CD15BA758100C3C268 /* SSVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariableView.m; sourceTree = "<group>"; };
+		9A599F0F15C26B72000DED43 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		9A599F3715C315E9000DED43 /* SSProgram+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSProgram+Additions.h"; sourceTree = "<group>"; };
+		9A599F3815C315E9000DED43 /* SSProgram+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSProgram+Additions.m"; sourceTree = "<group>"; };
+		9A599F4C15C4886B000DED43 /* NSManagedObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Additions.h"; sourceTree = "<group>"; };
+		9A599F4D15C4886B000DED43 /* NSManagedObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Additions.m"; sourceTree = "<group>"; };
+		9A599F8515C4A528000DED43 /* SSCommand+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSCommand+Additions.h"; sourceTree = "<group>"; };
+		9A599F8615C4A529000DED43 /* SSCommand+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSCommand+Additions.m"; sourceTree = "<group>"; };
+		9A599F8815C50C2E000DED43 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9A60A07315BC023100DC261F /* Story.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Story.seuss; sourceTree = "<group>"; };
 		9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSConsoleViewController.xib; sourceTree = "<group>"; };
+		9A9EFEE515C8F58000C04826 /* SSStringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSStringView.h; sourceTree = "<group>"; };
+		9A9EFEE615C8F58000C04826 /* SSStringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStringView.m; sourceTree = "<group>"; };
+		9A9EFEE815C8F77900C04826 /* string_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = string_bg.png; sourceTree = "<group>"; };
 		9AB784AE15BBC703002CEE23 /* libseuss.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libseuss.a; path = Seuss/build/Release/libseuss.a; sourceTree = "<group>"; };
+		9ACE27B015C66FED00D7112F /* SSCommandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCommandView.h; sourceTree = "<group>"; };
+		9ACE27B115C66FEE00D7112F /* SSCommandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCommandView.m; sourceTree = "<group>"; };
+		9ACE27B415C848A400D7112F /* SSVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariable.h; sourceTree = "<group>"; };
+		9ACE27B515C848A400D7112F /* SSVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariable.m; sourceTree = "<group>"; };
+		9ACE27B715C848A600D7112F /* SSProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSProgram.h; sourceTree = "<group>"; };
+		9ACE27B815C848A600D7112F /* SSProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSProgram.m; sourceTree = "<group>"; };
+		9ACE27BA15C848A600D7112F /* SSString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSString.h; sourceTree = "<group>"; };
+		9ACE27BB15C848A600D7112F /* SSString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSString.m; sourceTree = "<group>"; };
+		9ACE27BD15C848A600D7112F /* SSParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSParameter.h; sourceTree = "<group>"; };
+		9ACE27BE15C848A600D7112F /* SSParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSParameter.m; sourceTree = "<group>"; };
+		9ACE27C015C848A600D7112F /* SSCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCommand.h; sourceTree = "<group>"; };
+		9ACE27C115C848A600D7112F /* SSCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCommand.m; sourceTree = "<group>"; };
+		9ACE27C315C848A600D7112F /* SSStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSStatement.h; sourceTree = "<group>"; };
+		9ACE27C415C848A600D7112F /* SSStatement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatement.m; sourceTree = "<group>"; };
+		9ACE27C615C848FB00D7112F /* SSVariable+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSVariable+Additions.h"; sourceTree = "<group>"; };
+		9ACE27C715C848FB00D7112F /* SSVariable+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSVariable+Additions.m"; sourceTree = "<group>"; };
+		9ACE27C915C874C100D7112F /* SSParameter+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSParameter+Additions.h"; sourceTree = "<group>"; };
+		9ACE27CA15C874C100D7112F /* SSParameter+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSParameter+Additions.m"; sourceTree = "<group>"; };
+		9ACE27CC15C875FC00D7112F /* SSParameterType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSParameterType.h; sourceTree = "<group>"; };
+		9ACE27CD15C87A9C00D7112F /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		9ACE27CE15C87A9C00D7112F /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		9AE1484D15BB3D7800380CD5 /* Hello World.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Hello World.seuss"; sourceTree = "<group>"; };
 		9AE1485015BB3DAF00380CD5 /* Name.seuss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Name.seuss; sourceTree = "<group>"; };
 		AFCB95E115BB322700669CA7 /* SSPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPopOverViewController.h; sourceTree = "<group>"; };
@@ -96,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A599F8915C50C2E000DED43 /* CoreData.framework in Frameworks */,
 				9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */,
 				9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */,
 				9A3E369415BA745700C3C268 /* Foundation.framework in Frameworks */,
@@ -123,6 +173,7 @@
 				32C8931A15BCA72C0021E88E /* run_bg.png */,
 				3215DD2F15BC8E2700C2610C /* green_btn_sm.png */,
 				3215DD2D15BC8E1E00C2610C /* blue_sm_btn.png */,
+				9A9EFEE815C8F77900C04826 /* string_bg.png */,
 				3215DD2A15BC8E0A00C2610C /* variable_bg.png */,
 				32EFE91815BC84770015456F /* workarea_bg_only.png */,
 			);
@@ -157,6 +208,7 @@
 				9A3E369115BA745700C3C268 /* UIKit.framework */,
 				9A3E369315BA745700C3C268 /* Foundation.framework */,
 				9A3E369515BA745700C3C268 /* CoreGraphics.framework */,
+				9A599F8815C50C2E000DED43 /* CoreData.framework */,
 				9A3E36AF15BA745700C3C268 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
@@ -175,16 +227,10 @@
 				AFCB95F915BB7B6700669CA7 /* SSConsoleViewController.h */,
 				AFCB95FA15BB7B6700669CA7 /* SSConsoleViewController.m */,
 				9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */,
+				9A9EFEE415C8F31900C04826 /* Views */,
+				9A599F0D15C26B0A000DED43 /* Model */,
+				9A599F0B15C26A0A000DED43 /* Samples */,
 				9A3E369815BA745700C3C268 /* Supporting Files */,
-				9A3E36C615BA74E400C3C268 /* SSCanvasView.h */,
-				9A3E36C715BA74E400C3C268 /* SSCanvasView.m */,
-				9A3E36C915BA755E00C3C268 /* SSStatementView.h */,
-				9A3E36CA15BA755E00C3C268 /* SSStatementView.m */,
-				9A3E36CC15BA758100C3C268 /* SSVariableView.h */,
-				9A3E36CD15BA758100C3C268 /* SSVariableView.m */,
-				9AE1484D15BB3D7800380CD5 /* Hello World.seuss */,
-				9AE1485015BB3DAF00380CD5 /* Name.seuss */,
-				9A60A07315BC023100DC261F /* Story.seuss */,
 			);
 			path = "Seuss for iPad";
 			sourceTree = "<group>";
@@ -217,6 +263,82 @@
 				9A3E36B815BA745700C3C268 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9A599F0B15C26A0A000DED43 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				9AE1484D15BB3D7800380CD5 /* Hello World.seuss */,
+				9AE1485015BB3DAF00380CD5 /* Name.seuss */,
+				9A60A07315BC023100DC261F /* Story.seuss */,
+			);
+			name = Samples;
+			sourceTree = "<group>";
+		};
+		9A599F0D15C26B0A000DED43 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9A599F0E15C26B72000DED43 /* Model.xcdatamodeld */,
+				9A599F3515C315B6000DED43 /* Managed Objects */,
+				9A599F3615C315C1000DED43 /* Additions */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9A599F3515C315B6000DED43 /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				9ACE27B415C848A400D7112F /* SSVariable.h */,
+				9ACE27B515C848A400D7112F /* SSVariable.m */,
+				9ACE27B715C848A600D7112F /* SSProgram.h */,
+				9ACE27B815C848A600D7112F /* SSProgram.m */,
+				9ACE27BA15C848A600D7112F /* SSString.h */,
+				9ACE27BB15C848A600D7112F /* SSString.m */,
+				9ACE27BD15C848A600D7112F /* SSParameter.h */,
+				9ACE27BE15C848A600D7112F /* SSParameter.m */,
+				9ACE27C015C848A600D7112F /* SSCommand.h */,
+				9ACE27C115C848A600D7112F /* SSCommand.m */,
+				9ACE27C315C848A600D7112F /* SSStatement.h */,
+				9ACE27C415C848A600D7112F /* SSStatement.m */,
+			);
+			name = "Managed Objects";
+			sourceTree = "<group>";
+		};
+		9A599F3615C315C1000DED43 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				9A599F3715C315E9000DED43 /* SSProgram+Additions.h */,
+				9A599F3815C315E9000DED43 /* SSProgram+Additions.m */,
+				9A599F8515C4A528000DED43 /* SSCommand+Additions.h */,
+				9A599F8615C4A529000DED43 /* SSCommand+Additions.m */,
+				9ACE27C615C848FB00D7112F /* SSVariable+Additions.h */,
+				9ACE27C715C848FB00D7112F /* SSVariable+Additions.m */,
+				9ACE27C915C874C100D7112F /* SSParameter+Additions.h */,
+				9ACE27CA15C874C100D7112F /* SSParameter+Additions.m */,
+				9ACE27CC15C875FC00D7112F /* SSParameterType.h */,
+				9A599F4C15C4886B000DED43 /* NSManagedObject+Additions.h */,
+				9A599F4D15C4886B000DED43 /* NSManagedObject+Additions.m */,
+				9ACE27CD15C87A9C00D7112F /* NSString+Additions.h */,
+				9ACE27CE15C87A9C00D7112F /* NSString+Additions.m */,
+			);
+			name = Additions;
+			sourceTree = "<group>";
+		};
+		9A9EFEE415C8F31900C04826 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9A3E36C615BA74E400C3C268 /* SSCanvasView.h */,
+				9A3E36C715BA74E400C3C268 /* SSCanvasView.m */,
+				9ACE27B015C66FED00D7112F /* SSCommandView.h */,
+				9ACE27B115C66FEE00D7112F /* SSCommandView.m */,
+				9A3E36C915BA755E00C3C268 /* SSStatementView.h */,
+				9A3E36CA15BA755E00C3C268 /* SSStatementView.m */,
+				9A3E36CC15BA758100C3C268 /* SSVariableView.h */,
+				9A3E36CD15BA758100C3C268 /* SSVariableView.m */,
+				9A9EFEE515C8F58000C04826 /* SSStringView.h */,
+				9A9EFEE615C8F58000C04826 /* SSStringView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +425,7 @@
 				3215DD3015BC8E2700C2610C /* green_btn_sm.png in Resources */,
 				32C8931B15BCA72C0021E88E /* run_bg.png in Resources */,
 				32C8931D15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf in Resources */,
+				9A9EFEE915C8F77900C04826 /* string_bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +468,21 @@
 				9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */,
 				AFCB95E315BB322800669CA7 /* SSPopOverViewController.m in Sources */,
 				AFCB95FC15BB7B6700669CA7 /* SSConsoleViewController.m in Sources */,
+				9A599F1015C26B72000DED43 /* Model.xcdatamodeld in Sources */,
+				9A599F3915C315E9000DED43 /* SSProgram+Additions.m in Sources */,
+				9A599F4E15C4886B000DED43 /* NSManagedObject+Additions.m in Sources */,
+				9A599F8715C4A529000DED43 /* SSCommand+Additions.m in Sources */,
+				9ACE27B215C66FEE00D7112F /* SSCommandView.m in Sources */,
+				9ACE27B615C848A400D7112F /* SSVariable.m in Sources */,
+				9ACE27B915C848A600D7112F /* SSProgram.m in Sources */,
+				9ACE27BC15C848A600D7112F /* SSString.m in Sources */,
+				9ACE27BF15C848A600D7112F /* SSParameter.m in Sources */,
+				9ACE27C215C848A600D7112F /* SSCommand.m in Sources */,
+				9ACE27C515C848A600D7112F /* SSStatement.m in Sources */,
+				9ACE27C815C848FB00D7112F /* SSVariable+Additions.m in Sources */,
+				9ACE27CB15C874C100D7112F /* SSParameter+Additions.m in Sources */,
+				9ACE27CF15C87A9C00D7112F /* NSString+Additions.m in Sources */,
+				9A9EFEE715C8F58000C04826 /* SSStringView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +584,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seuss for iPad/Seuss for iPad-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = Seuss;
 				INFOPLIST_FILE = "Seuss for iPad/Seuss for iPad-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
@@ -532,6 +674,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9A599F0E15C26B72000DED43 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9A599F0F15C26B72000DED43 /* Model.xcdatamodel */,
+			);
+			currentVersion = 9A599F0F15C26B72000DED43 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9A3E368415BA745700C3C268 /* Project object */;
 }

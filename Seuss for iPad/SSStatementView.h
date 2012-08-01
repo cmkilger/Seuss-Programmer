@@ -8,17 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@class SSVariableView;
+@class SSStatement;
+@class SSCommand;
 
 @interface SSStatementView : UIView
 
-@property (readonly) NSString * statement;
+@property (strong, readonly) SSStatement * statement;
 
-- (id)initWithStatement:(NSString *)statement;
-- (void)addVariableView:(SSVariableView *)variable atIndex:(NSUInteger)index;
+- (id)initWithCommand:(SSCommand *)command;
+- (id)initWithStatement:(SSStatement *)statement;
 
-- (void)prepareForVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point;
-- (void)addVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point;
+- (void)addParameterGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
+
+- (void)prepareForParameterView:(UIView *)variableView atPoint:(CGPoint)point;
+- (BOOL)addParameterView:(UIView *)variableView atPoint:(CGPoint)point;
 - (void)unprepare;
 
 @end

@@ -7,8 +7,15 @@
 //
 
 #import "SSCanvasView.h"
+#import "SSCommandView.h"
 #import "SSStatementView.h"
 #import "SSVariableView.h"
+#import "SSProgram.h"
+#import "SSProgram+Additions.h"
+#import "SSCommand.h"
+#import "SSCommand+Additions.h"
+#import "SSParameter.h"
+#import "SSVariable.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <Seuss/Seuss.h>
@@ -20,11 +27,16 @@
 @property (strong) NSMutableArray * statementViews;
 
 @property (strong) SSStatementView * movingStatement;
-@property (strong) SSVariableView * movingVariable;
+@property (strong) UIView * movingParameter;
 
 @property (strong) UIScrollView * mainView;
 @property (strong) UIScrollView * commandResevoir;
 @property (strong) UIScrollView * variableResevoir;
+
+@property (strong) NSManagedObjectContext * context;
+
+- (void)addCommand:(SSCommand *)command;
+- (void)addVariable:(SSVariable *)statement;
 
 @end
 
@@ -34,10 +46,11 @@
 @synthesize variableViews = _variableViews;
 @synthesize statementViews = _statementViews;
 @synthesize movingStatement = _movingStatement;
-@synthesize movingVariable = _movingVariable;
+@synthesize movingParameter = _movingVariable;
 @synthesize mainView = _mainView;
 @synthesize commandResevoir = _commandResevoir;
 @synthesize variableResevoir = _variableResevoir;
+@synthesize context = _context;
 
 - (void)initialize {
     _commandViews = [[NSMutableArray alloc] init];
@@ -55,14 +68,12 @@
     commandFrame.size.width = resevoirWidth;
     commandFrame.size.height = floorf(commandFrame.size.height / 2);
     self.commandResevoir = [[UIScrollView alloc] initWithFrame:commandFrame];
-    //self.commandResevoir.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:1.0 alpha:1.0];
     self.commandResevoir.backgroundColor = [UIColor clearColor];    
     [self addSubview:self.commandResevoir];
     
     commandFrame.origin.y = CGRectGetMaxY(commandFrame);
     commandFrame.size.height = CGRectGetMaxY(self.bounds) - commandFrame.origin.y;
     self.variableResevoir = [[UIScrollView alloc] initWithFrame:commandFrame];
-    //self.variableResevoir.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
     self.variableResevoir.backgroundColor = [UIColor clearColor];        
     [self addSubview:self.variableResevoir];
     
@@ -87,8 +98,8 @@
     return self;
 }
 
-- (void)addStatement:(NSString *)statement {
-    SSStatementView * view = [[SSStatementView alloc] initWithStatement:statement];
+- (void)addCommand:(SSCommand *)command {
+    SSCommandView * view = [[SSCommandView alloc] initWithCommand:command];
     [view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
     [view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
     view.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -101,10 +112,10 @@
     [self setNeedsLayout];
 }
 
-- (void)addVariable:(NSString *)variable {
+- (void)addVariable:(SSVariable *)variable {
     SSVariableView * view = [[SSVariableView alloc] initWithVariable:variable];
-    [view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
-    [view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
+    [view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
+    [view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
     view.layer.shadowColor = [[UIColor blackColor] CGColor];
     view.layer.shadowOpacity = 0.6;
     view.layer.shadowOffset = CGSizeMake(0.0, 1.0);
@@ -116,14 +127,15 @@
 }
 
 - (void)moveStatement:(UIGestureRecognizer *)gesture {
-    SSStatementView * view = (SSStatementView *)[gesture view];
+    UIView * view = (SSStatementView *)[gesture view];
     CGPoint point = [gesture locationInView:self.mainView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
             if (!self.movingStatement) {
-                SSStatementView * movingView = view;
-                if ([self.commandViews containsObject:movingView]) {
-                    movingView = [[SSStatementView alloc] initWithStatement:view.statement];
+                SSStatementView * movingView = nil;
+                if ([view isMemberOfClass:[SSCommandView class]]) {
+                    SSCommandView * commandView = (SSCommandView *)view;
+                    movingView = [[SSStatementView alloc] initWithCommand:commandView.command];
                     [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
                     [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
                     movingView.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -133,6 +145,7 @@
                     movingView.layer.cornerRadius = 3.0;
                 }
                 else {
+                    movingView = (SSStatementView *)view;
                     [self.statementViews removeObject:movingView];
                 }
                 movingView.center = point;
@@ -168,11 +181,8 @@
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformIdentity;
                     movingView.alpha = 1.0;
-                    movingView.center = point;
                     movingView.layer.shadowOpacity = 0.6;
                     [self layoutStatements];
-                } completion:^(BOOL finished) {
-                    [movingView removeFromSuperview];
                 }];
             }
             else {
@@ -192,17 +202,17 @@
     }
 }
 
-- (void)moveVariable:(UIGestureRecognizer *)gesture {
-    SSVariableView * view = (SSVariableView *)[gesture view];
+- (void)moveParameter:(UIGestureRecognizer *)gesture {
+    UIView * view = [gesture view];
     CGPoint point = [gesture locationInView:self.mainView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
-            if (!self.movingVariable) {
-                SSVariableView * movingView = view;
+            if (!self.movingParameter) {
+                UIView * movingView = view;
                 if ([self.variableViews containsObject:movingView]) {
-                    movingView = [[SSVariableView alloc] initWithVariable:view.variable];
-                    [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
-                    [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveVariable:)]];
+                    movingView = [[SSVariableView alloc] initWithVariable:[(SSVariableView *)view variable]];
+                    [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
+                    [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
                     movingView.layer.shadowColor = [[UIColor blackColor] CGColor];
                     movingView.layer.shadowOpacity = 0.6;
                     movingView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
@@ -214,7 +224,7 @@
                 }
                 movingView.center = point;
                 [self.mainView addSubview:movingView];
-                self.movingVariable = movingView;
+                self.movingParameter = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
                     movingView.alpha = 0.6;
@@ -224,11 +234,11 @@
         } break;
             
         case UIGestureRecognizerStateChanged: {
-            self.movingVariable.center = point;
+            self.movingParameter.center = point;
             [UIView animateWithDuration:0.2 animations:^{
                 for (SSStatementView * statementView in self.statementViews) {
                     if (CGRectContainsPoint(statementView.frame, point))
-                        [statementView prepareForVariableView:self.movingVariable atPoint:[self convertPoint:point toView:statementView]];
+                        [statementView prepareForParameterView:self.movingParameter atPoint:[self convertPoint:point toView:statementView]];
                     else
                         [statementView unprepare];
                 }
@@ -238,14 +248,13 @@
             
         case UIGestureRecognizerStateEnded: {
             BOOL added = NO;
-            SSVariableView * movingView = self.movingVariable;
-            self.movingVariable = nil;
+            UIView * movingView = self.movingParameter;
+            self.movingParameter = nil;
             movingView.alpha = 1.0;
             movingView.transform = CGAffineTransformIdentity;
             for (SSStatementView * statementView in self.statementViews) {
                 if (CGRectContainsPoint(statementView.frame, point)) {
-                    added = YES;
-                    [statementView addVariableView:movingView atPoint:point];
+                    added = [statementView addParameterView:movingView atPoint:[self convertPoint:point toView:statementView]];
                     break;
                 }
             }
@@ -285,10 +294,10 @@
     CGFloat y = 15;
     for (UIView * statementView in self.commandViews) {
         CGRect frame = statementView.frame;
-        frame.origin.x = 60;
+        frame.origin.x = 40;
         frame.origin.y = y;
         statementView.frame = frame;
-        y += 50 + CGRectGetHeight(frame);
+        y += 29 + CGRectGetHeight(frame);
     }
     self.commandResevoir.contentSize = CGSizeMake(self.commandResevoir.bounds.size.width, y+20);
     
@@ -307,21 +316,17 @@
 
 #pragma mark - Loading
 
-- (void)addStatement:(NSString *)name withVariable:(NSString *)parameter {
-    SSStatementView * statement = [[SSStatementView alloc] initWithStatement:name];
-    
-    [statement addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
-    [statement addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
-    
-    [self.statementViews addObject:statement];
-    
-    [self.mainView addSubview:statement];
-    
-    SSVariableView * variable = [[SSVariableView alloc] initWithVariable:parameter];
-    [statement addVariableView:variable atIndex:0];
+- (void)addStatement:(SSStatement *)statement {
+    SSStatementView * statementView = [[SSStatementView alloc] initWithStatement:statement];
+    [statementView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+    [statementView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveStatement:)]];
+    [statementView addParameterGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
+    [statementView addParameterGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
+    [self.statementViews addObject:statementView];
+    [self.mainView addSubview:statementView];
 }
 
-- (void)loadFileAtPath:(NSString *)path {
+- (void)reset {
     [self.statementViews removeAllObjects];
     [self.commandViews removeAllObjects];
     [self.variableViews removeAllObjects];
@@ -331,86 +336,44 @@
         [subview removeFromSuperview];
     for (UIView * subview in [self.variableResevoir subviews])
         [subview removeFromSuperview];
+}
+
+- (void)loadFileAtPath:(NSString *)path {
+    [self reset];
     
-    [self addStatement:@"Write"];
-    [self addStatement:@"Read"];
-    [self addVariable:@"new line"];
+    NSURL * url = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    NSManagedObjectModel * model = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
+    NSPersistentStoreCoordinator * coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+    [coordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:nil];
+    NSManagedObjectContext * context = [[NSManagedObjectContext alloc] init];
+    [context setPersistentStoreCoordinator:coordinator];
+    NSData * data = [NSData dataWithContentsOfFile:path];
+    NSString * name = [[path lastPathComponent] stringByDeletingPathExtension];
+    SSProgram * program = [SSProgram programWithName:name data:data inContext:context];
     
-    SUString * file = SUStringCreate([path cStringUsingEncoding:NSUTF8StringEncoding]);
-    SUList * tokens = SUTokenizeFile(file);
-    SUList * errors = SUListCreate();
-    SUProgram * program = SUProgramCreate(tokens, errors);
+    NSSortDescriptor * signatureSort = [NSSortDescriptor sortDescriptorWithKey:@"signatureKey" ascending:YES];
+    for (SSCommand * command in [program.commands sortedArrayUsingDescriptors:[NSArray arrayWithObject:signatureSort]])
+        [self addCommand:command];
     
-    SUList * statements = SUProgramGetStatements(program);
-    SUIterator * statementIterator = SUListCreateIterator(statements);
-    SUStatement * statement = NULL;
-    while ((statement = SUIteratorNext(statementIterator))) {
-        SUList * signature = SUFunctionGetSignature(SUStatementGetFunction(statement));
-        SUList * words = SUListGetValueAtIndex(signature, 0);
-        SUString * name = SUListGetValueAtIndex(words, 0);
-        NSString * nameString = [NSString stringWithCString:SUStringGetCString(name) encoding:NSUTF8StringEncoding];
-        
-        SUList * parameters = SUStatementGetParameters(statement);
-        SUTypeRef parameter = SUListGetValueAtIndex(parameters, 0);
-        NSString * parameterString = nil;
-        if (SUTypeIsVariable(parameter)) {
-            SUList * name = SUVariableGetName((SUVariable*)parameter);
-            NSMutableString * string = [NSMutableString string];
-            SUToken * word = NULL;
-            SUIterator * wordIterator = SUListCreateIterator(name);
-            while ((word = SUIteratorNext(wordIterator))) {
-                if ([string length] > 0)
-                    [string appendString:@" "];
-                [string appendString:[NSString stringWithCString:SUStringGetCString(SUTokenGetValue(word)) encoding:NSUTF8StringEncoding]];
+    NSSortDescriptor * orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+    for (SSStatement * statement in [program.statements sortedArrayUsingDescriptors:[NSArray arrayWithObject:orderSort]])
+        [self addStatement:statement];
+    
+    NSMutableDictionary * variableCache = [[NSMutableDictionary alloc] init];
+    NSSet * parameters = [program.statements valueForKeyPath:@"@distinctUnionOfSets.parameters"];
+    NSSortDescriptor * variableSort = [NSSortDescriptor sortDescriptorWithKey:@"variable.name" ascending:YES];
+    for (SSParameter * parameter in [parameters sortedArrayUsingDescriptors:[NSArray arrayWithObject:variableSort]]) {
+        if (parameter.variable) {
+            SSVariable * variable = [variableCache objectForKey:parameter.variable.name];
+            if (!variable) {
+                variable = parameter.variable;
+                [self addVariable:variable];
+                [variableCache setObject:variable forKey:variable.name];
             }
-            SURelease(wordIterator);
-            parameterString = string;
         }
-        else {
-            parameterString = [NSString stringWithUTF8String:SUStringGetCString(parameter)];
-        }
-        
-        [self addStatement:nameString withVariable:parameterString];
     }
     
-    SUList * functions = SUProgramGetFunctions(program);
-    SUIterator * functionIterator = SUListCreateIterator(functions);
-    SUFunction * function = NULL;
-    while ((function = SUIteratorNext(functionIterator))) {
-        SUList * signature = SUFunctionGetSignature(function);
-        SUList * words = SUListGetValueAtIndex(signature, 0);
-        SUString * name = SUListGetValueAtIndex(words, 0);
-        NSString * nameString = [NSString stringWithUTF8String:SUStringGetCString(name)];
-        if (!([nameString isEqualToString:@"Write"] || [nameString isEqualToString:@"Read"]))
-            [self addStatement:nameString];
-    }
-    
-    SUList * variables = SUProgramGetVariables(program);
-    SUIterator * variableIterator = SUListCreateIterator(variables);
-    SUVariable * variable = NULL;
-    while ((variable = SUIteratorNext(variableIterator))) {
-        NSMutableString * nameString = [[NSMutableString alloc] init];
-        SUList * signature = SUVariableGetName(variable);
-        SUIterator * signatureIterator = SUListCreateIterator(signature);
-        SUToken * token = NULL;
-        while ((token = SUIteratorNext(signatureIterator))) {
-            SUString * name = SUTokenGetValue(token);
-            if ([nameString length] > 0)
-                [nameString appendString:@" "];
-            [nameString appendString:[NSString stringWithUTF8String:SUStringGetCString(name)]];
-        }
-        if (![nameString isEqualToString:@"new line"])
-            [self addVariable:nameString];
-        SURelease(signatureIterator);
-    }
-    
-    SURelease(variableIterator);
-    SURelease(functionIterator);
-    SURelease(statementIterator);
-    SURelease(file);
-    SURelease(tokens);
-    SURelease(errors);
-    SURelease(program);
+    self.context = context;
     
     [self setNeedsLayout];
 }

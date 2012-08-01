@@ -7,10 +7,11 @@
 //
 
 #import "SSVariableView.h"
+#import "SSVariable.h"
 
 @interface SSVariableView ()
 
-@property (readwrite) NSString * variable;
+@property (readwrite) SSVariable * variable;
 
 @end
 
@@ -18,11 +19,13 @@
 
 @synthesize variable = _variable;
 
-- (id)initWithVariable:(NSString *)variable {
-    //    for (NSString * familyName in [UIFont familyNames])
-    //        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
+- (id)initWithVariable:(SSVariable *)variable {
+//    for (NSString * familyName in [UIFont familyNames])
+//        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
     
-    CGSize size = [variable sizeWithFont:[UIFont fontWithName:@"DoctorSoosLight" size:28.0]];
+    UIFont * font = [UIFont fontWithName:@"DoctorSoosLight" size:28.0];
+    
+    CGSize size = [variable.name sizeWithFont:font];
     size.width += 20;
     size.height = 47;
     
@@ -33,37 +36,23 @@
         _variable = variable;
         self.backgroundColor = [UIColor clearColor];
         
-        UIImage *backgroundImg = [[UIImage imageNamed:@"variable_bg.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-        UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:backgroundImg];
+        UIImage * backgroundImg = [[UIImage imageNamed:@"variable_bg.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        UIImageView * backgroundImgView = [[UIImageView alloc] initWithImage:backgroundImg];
         backgroundImgView.frame = self.bounds;
         
         [self addSubview:backgroundImgView];
-        [self sendSubviewToBack:backgroundImgView];    
+        [self sendSubviewToBack:backgroundImgView];
         
-        UIFont * font = [UIFont fontWithName:@"DoctorSoosLight" size:28.0];        
-        CGSize size = [variable sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(10, 8, size.width, size.height));                
-        UILabel *theVariable = [[UILabel alloc] initWithFrame:frame];
-        theVariable.font = font;
-        theVariable.backgroundColor = [UIColor clearColor];
-        theVariable.textColor = [UIColor whiteColor];
-        theVariable.text = variable;
-        [self addSubview:theVariable];        
+        CGSize size = [variable.name sizeWithFont:font];
+        CGRect frame = CGRectIntegral(CGRectMake(10, 8, size.width, size.height));
+        UILabel * variableLabel = [[UILabel alloc] initWithFrame:frame];
+        variableLabel.font = font;
+        variableLabel.backgroundColor = [UIColor clearColor];
+        variableLabel.textColor = [UIColor whiteColor];
+        variableLabel.text = variable.name;
+        [self addSubview:variableLabel];
     }
     return self;
 }
-
-//- (void)drawRect:(CGRect)rect {
-//    NSString * variable = self.variable;
-//    UIFont * font = [UIFont fontWithName:@"CourierNewPS-BoldMT" size:24.0];
-//    CGSize size = [variable sizeWithFont:font];
-//    CGRect frame = CGRectIntegral(CGRectMake(10, 5, size.width, size.height));
-//    frame.origin.y -= 1;
-//    [[UIColor blackColor] set];
-//    [variable drawInRect:frame withFont:font];
-//    frame.origin.y += 1;
-//    [[UIColor whiteColor] set];
-//    [variable drawInRect:frame withFont:font];
-//}
 
 @end

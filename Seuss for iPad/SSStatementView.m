@@ -8,105 +8,265 @@
 
 #import "SSStatementView.h"
 #import "SSVariableView.h"
+#import "SSStringView.h"
+#import "SSStatement.h"
+#import "SSCommand.h"
+#import "SSCommand+Additions.h"
+#import "NSManagedObject+Additions.h"
+#import "SSString.h"
+#import "SSParameter.h"
+#import "SSVariable.h"
 
-#define DEFAULT_VARIABLE_WIDTH 50.0
-#define LEFT_PADDING 10.0
+#define DEFAULT_HEIGHT 60.0
+
+#define DEFAULT_VARIABLE_WIDTH 100.0
+#define LEFT_PADDING 15.0
 #define MIDDLE_PADDING 10.0
-#define RIGHT_PADDING 10.0
+#define RIGHT_PADDING 25.0
 
-#define FONT [UIFont fontWithName:@"DoctorSoosLight" size:28.0]
+#define PARAMETER_VERTICAL_PADDING 8.0
+
+#define SIGNATURE_BASE_INDEX 1000
+#define PARAMETER_BASE_INDEX 2000
+
+#define SSStatementFont() [UIFont fontWithName:@"DoctorSoosLight" size:28.0]
 
 @interface SSStatementView ()
 
-@property (readwrite) NSString * statement;
-@property (strong) SSVariableView * variableView;
+@property (strong, readwrite) SSStatement * statement;
+@property (strong) UIView * parameterView;
+
+- (UILabel *)signatureLabelAtIndex:(NSUInteger)index;
+- (UIView *)parameterViewAtIndex:(NSUInteger)index;
 
 @end
 
 @implementation SSStatementView
 
 @synthesize statement = _statement;
-@synthesize variableView = _variableView;
+@synthesize parameterView = _variableView;
 
-- (id)initWithStatement:(NSString *)statement {
-//    for (NSString * familyName in [UIFont familyNames])
-//        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
-        
-    CGSize size = [statement sizeWithFont:FONT];
-    size.width += LEFT_PADDING + MIDDLE_PADDING + DEFAULT_VARIABLE_WIDTH + RIGHT_PADDING;
-    size.height = 60;
-    
-    CGRect frame = CGRectZero;
-    frame.size = size;
-    
-    self = [super initWithFrame:CGRectIntegral(frame)];
+- (id)initWithCommand:(SSCommand *)command {
+    NSManagedObjectContext * context = [command managedObjectContext];
+    SSStatement * statement = [[SSStatement alloc] initWithManagedObjectContext:context];
+    statement.command = command;
+    return [self initWithStatement:statement];
+}
+
+- (id)initWithStatement:(SSStatement *)statement {
+    self = [super initWithFrame:CGRectMake(0, 0, DEFAULT_VARIABLE_WIDTH, DEFAULT_HEIGHT)];
     if (self) {
-        _statement = statement;
+        self.statement = statement;
         self.backgroundColor = [UIColor clearColor];
         
-        UIImage * img = nil;
+        // Select background image
+        UIImage * backgroundImage = nil;
+        if ([statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame)
+            backgroundImage = [UIImage imageNamed:@"blue_sm_btn.png"];
+        else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
+            backgroundImage = [UIImage imageNamed:@"green_btn_sm.png"];
+        backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 40)];
+        UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+        backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        backgroundImageView.frame = self.bounds;
+        [self addSubview:backgroundImageView];
         
-        if ([statement isEqualToString:@"Write"]) 
-        {
-            img = [UIImage imageNamed:@"blue_sm_btn.png"];
+        NSSortDescriptor * sort = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+        NSArray * signature = [statement.command.signature sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+        NSArray * parameters = [statement.parameters sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+        
+        UIFont * font = SSStatementFont();
+        CGFloat x = LEFT_PADDING;
+        NSUInteger index = 0;
+        NSUInteger parameterIndex = 0;
+        for (SSString * string in signature) {
+            NSString * value = string.value;
+            UILabel * label = [self signatureLabelAtIndex:index];
+            CGFloat width = ceilf([value sizeWithFont:font].width);
+            label.frame = CGRectMake(x, PARAMETER_VERTICAL_PADDING, width, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING);
+            label.text = value;
+            [self addSubview:label];
+            x += width + MIDDLE_PADDING;
+            
+            if (parameterIndex < [parameters count]) {
+                SSParameter * parameter = [parameters objectAtIndex:parameterIndex];
+                if (parameter && parameter.order == index) {
+                    parameterIndex++;
+                    
+                    UIView * parameterView = nil;
+                    switch (parameter.type) {
+                        case SSParameterTypeVariable: {
+                            parameterView = [[SSVariableView alloc] initWithVariable:parameter.variable];
+                        } break;
+                        
+                        case SSParameterTypeString: {
+                            parameterView = [[SSStringView alloc] initWithString:parameter.string.value];
+                        } break;
+                        
+                        default:
+                            break;
+                    }
+                    
+                    parameterView.tag = PARAMETER_BASE_INDEX + index;
+                    
+                    CGRect parameterFrame = parameterView.frame;
+                    parameterFrame.origin.x = x;
+                    parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
+                    parameterView.frame = parameterFrame;
+                    [self addSubview:parameterView];
+                    
+                    x += CGRectGetWidth(parameterFrame) + MIDDLE_PADDING;
+                }
+                else {
+                    x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
+                }
+            }
+            else {
+                x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
+            }
+            
+            index++;
         }
-        else if ([statement isEqualToString:@"Read"]) {
-            img = [UIImage imageNamed:@"green_btn_sm.png"];
-        }
         
-        img = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 40)];
-        UIImageView *backgroundImg = [[UIImageView alloc] initWithImage:img];
-        
-        backgroundImg.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        backgroundImg.frame = self.bounds;
-        
-        [self insertSubview:backgroundImg atIndex:0];
-        
-        UIFont * font = FONT;        
-        CGSize size = [statement sizeWithFont:font];
-        CGRect frame = CGRectIntegral(CGRectMake(15, 16, size.width, size.height));                
-        UILabel *theStatement = [[UILabel alloc] initWithFrame:frame];
-        theStatement.font = font;
-        theStatement.backgroundColor = [UIColor clearColor];
-        theStatement.textColor = [UIColor whiteColor];
-        theStatement.text = statement;
-        [self addSubview:theStatement];
+        self.bounds = CGRectMake(0, 0, x - MIDDLE_PADDING + RIGHT_PADDING, DEFAULT_HEIGHT);
     }
     return self;
 }
 
-- (void)prepareForVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point {
-    [self.variableView removeFromSuperview];
-    CGFloat variableWidth = CGRectGetWidth(variableView.bounds);
-    CGRect statementFrame = self.frame;
-    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
-    statementFrame.size.width = LEFT_PADDING + statementWidth + MIDDLE_PADDING + variableWidth + RIGHT_PADDING;
-    self.frame = statementFrame;
+- (void)addParameterGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
+    NSUInteger count = [self.statement.command.signature count];
+    for (int i = 0; i < count; i++) {
+        UIView * view = [self parameterViewAtIndex:i];
+        [view addGestureRecognizer:gestureRecognizer];
+    }
 }
 
-- (void)addVariableView:(SSVariableView *)variableView atPoint:(CGPoint)point {
-    [self addVariableView:variableView atIndex:0];
+- (UILabel *)signatureLabelAtIndex:(NSUInteger)index {
+    UILabel * label = (UILabel *)[self viewWithTag:SIGNATURE_BASE_INDEX+index];
+    if (!label) {
+        label = [[UILabel alloc] initWithFrame:self.bounds];
+        label.font = SSStatementFont();
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor whiteColor];
+        label.tag = SIGNATURE_BASE_INDEX+index;
+        [self addSubview:label];
+    }
+    return label;
+}
+
+- (UIView *)parameterViewAtIndex:(NSUInteger)index {
+    return [self viewWithTag:PARAMETER_BASE_INDEX+index];
+}
+
+- (void)prepareForParameterView:(SSVariableView *)variableView atPoint:(CGPoint)point {
+    CGFloat width = LEFT_PADDING;
+    CGFloat variableWidth = CGRectGetWidth(variableView.frame);
+    NSUInteger count = [self.statement.command.signature count];
+    for (NSUInteger i = 0; i < count; i++) {
+        UILabel * signatureLabel = [self signatureLabelAtIndex:i];
+        CGRect signatureFrame = signatureLabel.frame;
+        signatureFrame.origin.x = width;
+        signatureLabel.frame = signatureFrame;
+        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+        
+        UIView * parameterView = [self parameterViewAtIndex:i];
+        if (point.x >= width && point.x <= width + variableWidth) {
+            parameterView.hidden = YES;
+            width += variableWidth + MIDDLE_PADDING;
+        }
+        else {
+            CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
+            if (parameterView) {
+                CGRect parameterFrame = parameterView.frame;
+                parameterFrame.origin.x = width;
+                parameterView.frame = parameterFrame;
+                parameterWidth = CGRectGetWidth(parameterFrame);
+                parameterView.hidden = NO;
+            }
+            width += parameterWidth + MIDDLE_PADDING;
+        }
+    }
+    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    self.frame = frame;
+}
+
+- (BOOL)addParameterView:(UIView *)newParameterView atPoint:(CGPoint)point {
+    CGFloat width = LEFT_PADDING;
+    CGFloat newParameterWidth = CGRectGetWidth(newParameterView.frame);
+    NSUInteger count = [self.statement.command.signature count];
+    
+    BOOL added = NO;
+    
+    for (NSUInteger i = 0; i < count; i++) {
+        UILabel * signatureLabel = [self signatureLabelAtIndex:i];
+        CGRect signatureFrame = signatureLabel.frame;
+        signatureFrame.origin.x = width;
+        signatureLabel.frame = signatureFrame;
+        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+        
+        UIView * parameterView = [self parameterViewAtIndex:i];
+        if (point.x >= width && point.x <= width + newParameterWidth) {
+            if (parameterView)
+                [parameterView removeFromSuperview];
+            newParameterView.tag = PARAMETER_BASE_INDEX + i;
+            CGRect parameterFrame = newParameterView.frame;
+            parameterFrame.origin.x = width;
+            parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
+            newParameterView.frame = parameterFrame;
+            width += newParameterWidth + MIDDLE_PADDING;
+            [self addSubview:newParameterView];
+            added = YES;
+        }
+        else {
+            CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
+            if (parameterView) {
+                CGRect parameterFrame = parameterView.frame;
+                parameterFrame.origin.x = width;
+                parameterView.frame = parameterFrame;
+                parameterWidth = CGRectGetWidth(parameterFrame);
+                parameterView.hidden = NO;
+            }
+            width += parameterWidth + MIDDLE_PADDING;
+        }
+    }
+    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    self.frame = frame;
+    
+    return added;
 }
 
 - (void)unprepare {
-    [self addSubview:self.variableView];
-    CGFloat variableWidth = (self.variableView) ? self.variableView.frame.size.width : DEFAULT_VARIABLE_WIDTH;
-    CGRect statementFrame = self.frame;
-    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
-    statementFrame.size.width = LEFT_PADDING + statementWidth + MIDDLE_PADDING + variableWidth + RIGHT_PADDING;
-    self.frame = statementFrame; 
-}
-
-- (void)addVariableView:(SSVariableView *)variableView atIndex:(NSUInteger)index {
-    [self.variableView removeFromSuperview];
-    self.variableView = variableView;
-    [self prepareForVariableView:variableView atPoint:CGPointZero];
-    CGFloat statementWidth = [self.statement sizeWithFont:FONT].width;
-    CGRect variableFrame = variableView.frame;
-    variableFrame.origin.x = LEFT_PADDING + statementWidth + MIDDLE_PADDING;
-    variableFrame.origin.y = 8;
-    variableView.frame = variableFrame;
-    [self addSubview:variableView];
+    CGFloat width = LEFT_PADDING;
+    NSUInteger count = [self.statement.command.signature count];
+    for (NSUInteger i = 0; i < count; i++) {
+        UILabel * signatureLabel = [self signatureLabelAtIndex:i];
+        CGRect signatureFrame = signatureLabel.frame;
+        signatureFrame.origin.x = width;
+        signatureLabel.frame = signatureFrame;
+        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+        
+        UIView * parameterView = [self parameterViewAtIndex:i];
+        CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
+        if (parameterView) {
+            CGRect parameterFrame = parameterView.frame;
+            parameterFrame.origin.x = width;
+            parameterView.frame = parameterFrame;
+            parameterWidth = CGRectGetWidth(parameterFrame);
+            parameterView.hidden = NO;
+        }
+        width += parameterWidth + MIDDLE_PADDING;
+    }
+    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    self.frame = frame;
 }
 
 @end
