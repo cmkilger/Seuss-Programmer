@@ -22,8 +22,11 @@
 //    for (NSString * familyName in [UIFont familyNames])
 //        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
     
+    string = [string stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
     string = [string stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    string = [NSString stringWithFormat:@"\"%@\"", string];
+    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];
+    string = [string stringByReplacingOccurrencesOfString:@"\t" withString:@"\\t"];
+    string = [NSString stringWithFormat:@"\u201c%@\u201d", string];
     
     CGSize size = [string sizeWithFont:[UIFont fontWithName:@"DoctorSoosLight" size:28.0]];
     size.width += 20;
