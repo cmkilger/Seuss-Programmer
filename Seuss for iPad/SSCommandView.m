@@ -67,7 +67,7 @@
             backgroundImage = [UIImage imageNamed:@"blue_sm_btn.png"];
         else if ([command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
             backgroundImage = [UIImage imageNamed:@"green_btn_sm.png"];
-        backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 40)];
+        backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 12)];
         UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
         backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         backgroundImageView.frame = self.bounds;

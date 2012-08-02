@@ -21,8 +21,8 @@
 
 #define DEFAULT_VARIABLE_WIDTH 100.0
 #define LEFT_PADDING 15.0
-#define MIDDLE_PADDING 10.0
-#define RIGHT_PADDING 25.0
+#define MIDDLE_PADDING 4.0
+#define RIGHT_PADDING 15.0
 
 #define PARAMETER_VERTICAL_PADDING 8.0
 
@@ -65,7 +65,7 @@
             backgroundImage = [UIImage imageNamed:@"blue_sm_btn.png"];
         else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
             backgroundImage = [UIImage imageNamed:@"green_btn_sm.png"];
-        backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 15, 0, 40)];
+        backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 12)];
         UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
         backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         backgroundImageView.frame = self.bounds;
@@ -128,7 +128,19 @@
             index++;
         }
         
-        self.bounds = CGRectMake(0, 0, x - MIDDLE_PADDING + RIGHT_PADDING, DEFAULT_HEIGHT);
+        CGFloat periodWidth = [@"." sizeWithFont:font].width;
+        UILabel * periodLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, PARAMETER_VERTICAL_PADDING, periodWidth, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING)];
+        periodLabel.text = @".";
+        periodLabel.font = font;
+        periodLabel.backgroundColor = [UIColor clearColor];
+        periodLabel.textColor = [UIColor whiteColor];
+        periodLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        
+        x += periodWidth + RIGHT_PADDING;
+        
+        self.frame = CGRectMake(0, 0, x, DEFAULT_HEIGHT);
+        
+        [self addSubview:periodLabel];
     }
     return self;
 }
@@ -186,7 +198,9 @@
             width += parameterWidth + MIDDLE_PADDING;
         }
     }
-    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
+    width += periodWidth + RIGHT_PADDING;
     
     CGRect frame = self.frame;
     frame.size.width = width;
@@ -232,7 +246,9 @@
             width += parameterWidth + MIDDLE_PADDING;
         }
     }
-    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
+    width += periodWidth + RIGHT_PADDING;
     
     CGRect frame = self.frame;
     frame.size.width = width;
@@ -262,7 +278,9 @@
         }
         width += parameterWidth + MIDDLE_PADDING;
     }
-    width += RIGHT_PADDING - MIDDLE_PADDING;
+    
+    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
+    width += periodWidth + RIGHT_PADDING;
     
     CGRect frame = self.frame;
     frame.size.width = width;
