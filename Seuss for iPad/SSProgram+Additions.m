@@ -41,7 +41,7 @@
             SUFunction * function = value;
             SSCommand * command = [[SSCommand alloc] initWithFunction:function inContext:context];
             [program addCommandsObject:command];
-            [commandCache setObject:command forKey:[NSString stringWithFormat:@"%x", function]];
+            [commandCache setObject:command forKey:[NSString stringWithFormat:@"%x", (unsigned int)function]];
         });
         
         // Parse statements
@@ -50,7 +50,7 @@
             SUStatement * suStatement = value;
             SUFunction * function = SUStatementGetFunction(suStatement);
             
-            NSString * key = [NSString stringWithFormat:@"%x", function];
+            NSString * key = [NSString stringWithFormat:@"%x", (unsigned int)function];
             SSCommand * command = [commandCache objectForKey:key];
             if (!command) {
                 command = [[SSCommand alloc] initWithFunction:function inContext:context];
