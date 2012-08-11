@@ -13,6 +13,7 @@
 		32C8931B15BCA72C0021E88E /* run_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C8931A15BCA72C0021E88E /* run_bg.png */; };
 		32C8931D15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32C8931C15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf */; };
 		32EFE91915BC84770015456F /* workarea_bg_only.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EFE91815BC84770015456F /* workarea_bg_only.png */; };
+		9A17648015CC331F00FD65A7 /* slit_front_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A17647F15CC331F00FD65A7 /* slit_front_blue.png */; };
 		9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369115BA745700C3C268 /* UIKit.framework */; };
 		9A3E369415BA745700C3C268 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369315BA745700C3C268 /* Foundation.framework */; };
 		9A3E369615BA745700C3C268 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E369515BA745700C3C268 /* CoreGraphics.framework */; };
@@ -38,6 +39,8 @@
 		9A86773D15BBE81300BBDAEE /* SSConsoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A86773C15BBE81300BBDAEE /* SSConsoleViewController.xib */; };
 		9A9EFEE715C8F58000C04826 /* SSStringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9EFEE615C8F58000C04826 /* SSStringView.m */; };
 		9A9EFEE915C8F77900C04826 /* string_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A9EFEE815C8F77900C04826 /* string_bg.png */; };
+		9A9EFEF415CA67AC00C04826 /* slit_front_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A9EFEF215CA67AC00C04826 /* slit_front_green.png */; };
+		9A9EFEF515CA67AC00C04826 /* slit_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A9EFEF315CA67AC00C04826 /* slit_back.png */; };
 		9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB784AE15BBC703002CEE23 /* libseuss.a */; };
 		9ACE27B215C66FEE00D7112F /* SSCommandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27B115C66FEE00D7112F /* SSCommandView.m */; };
 		9ACE27B615C848A400D7112F /* SSVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE27B515C848A400D7112F /* SSVariable.m */; };
@@ -72,6 +75,7 @@
 		32C8931A15BCA72C0021E88E /* run_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run_bg.png; sourceTree = "<group>"; };
 		32C8931C15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Doctor Soos Light 1.1.ttf"; sourceTree = "<group>"; };
 		32EFE91815BC84770015456F /* workarea_bg_only.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = workarea_bg_only.png; sourceTree = "<group>"; };
+		9A17647F15CC331F00FD65A7 /* slit_front_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slit_front_blue.png; sourceTree = "<group>"; };
 		9A3E368D15BA745700C3C268 /* Seuss for iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Seuss for iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3E369115BA745700C3C268 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9A3E369315BA745700C3C268 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -110,6 +114,8 @@
 		9A9EFEE515C8F58000C04826 /* SSStringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSStringView.h; sourceTree = "<group>"; };
 		9A9EFEE615C8F58000C04826 /* SSStringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStringView.m; sourceTree = "<group>"; };
 		9A9EFEE815C8F77900C04826 /* string_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = string_bg.png; sourceTree = "<group>"; };
+		9A9EFEF215CA67AC00C04826 /* slit_front_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slit_front_green.png; sourceTree = "<group>"; };
+		9A9EFEF315CA67AC00C04826 /* slit_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slit_back.png; sourceTree = "<group>"; };
 		9AB784AE15BBC703002CEE23 /* libseuss.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libseuss.a; path = Seuss/build/Release/libseuss.a; sourceTree = "<group>"; };
 		9ACE27B015C66FED00D7112F /* SSCommandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCommandView.h; sourceTree = "<group>"; };
 		9ACE27B115C66FEE00D7112F /* SSCommandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCommandView.m; sourceTree = "<group>"; };
@@ -176,6 +182,9 @@
 				9A9EFEE815C8F77900C04826 /* string_bg.png */,
 				3215DD2A15BC8E0A00C2610C /* variable_bg.png */,
 				32EFE91815BC84770015456F /* workarea_bg_only.png */,
+				9A17647F15CC331F00FD65A7 /* slit_front_blue.png */,
+				9A9EFEF215CA67AC00C04826 /* slit_front_green.png */,
+				9A9EFEF315CA67AC00C04826 /* slit_back.png */,
 			);
 			name = Resources;
 			path = "Seuss for iPad";
@@ -426,6 +435,9 @@
 				32C8931B15BCA72C0021E88E /* run_bg.png in Resources */,
 				32C8931D15BCA9B50021E88E /* Doctor Soos Light 1.1.ttf in Resources */,
 				9A9EFEE915C8F77900C04826 /* string_bg.png in Resources */,
+				9A9EFEF415CA67AC00C04826 /* slit_front_green.png in Resources */,
+				9A9EFEF515CA67AC00C04826 /* slit_back.png in Resources */,
+				9A17648015CC331F00FD65A7 /* slit_front_blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,13 +21,15 @@
 
 #define DEFAULT_VARIABLE_WIDTH 100.0
 #define LEFT_PADDING 15.0
-#define MIDDLE_PADDING 4.0
+#define MIDDLE_PADDING 8.0
 #define RIGHT_PADDING 15.0
 
 #define PARAMETER_VERTICAL_PADDING 8.0
 
 #define SIGNATURE_BASE_INDEX 1000
 #define PARAMETER_BASE_INDEX 2000
+#define PARAMETER_BACK_BASE_INDEX 3000
+#define PARAMETER_FRONT_BASE_INDEX 4000
 
 #define SSStatementFont() [UIFont fontWithName:@"DoctorSoosLight" size:28.0]
 
@@ -60,12 +62,19 @@
         self.backgroundColor = [UIColor clearColor];
         
         // Select background image
+        UIImage * slitBack = [[UIImage imageNamed:@"slit_back.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
+        UIImage * slitFront = nil;
         UIImage * backgroundImage = nil;
-        if ([statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame)
+        if ([statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame) {
             backgroundImage = [UIImage imageNamed:@"blue_sm_btn.png"];
-        else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
+            slitFront = [UIImage imageNamed:@"slit_front_blue.png"];
+        }
+        else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame) {
             backgroundImage = [UIImage imageNamed:@"green_btn_sm.png"];
+            slitFront = [UIImage imageNamed:@"slit_front_green.png"];
+        }
         backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 12)];
+        slitFront = [slitFront resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
         UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
         backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         backgroundImageView.frame = self.bounds;
@@ -88,42 +97,51 @@
             [self addSubview:label];
             x += width + MIDDLE_PADDING;
             
-            if (parameterIndex < [parameters count]) {
-                SSParameter * parameter = [parameters objectAtIndex:parameterIndex];
-                if (parameter && parameter.order == index) {
-                    parameterIndex++;
+            UIImageView * backSlitView = [[UIImageView alloc] initWithImage:slitBack];
+            UIImageView * frontSlitView = [[UIImageView alloc] initWithImage:slitFront];
+            backSlitView.tag = PARAMETER_BACK_BASE_INDEX + index;
+            frontSlitView.tag = PARAMETER_FRONT_BASE_INDEX + index;
+            [self addSubview:backSlitView];
+            
+            SSParameter * parameter = nil;
+            if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index) {
+                parameterIndex++;
+                
+                UIView * parameterView = nil;
+                switch (parameter.type) {
+                    case SSParameterTypeVariable: {
+                        parameterView = [[SSVariableView alloc] initWithVariable:parameter.variable];
+                    } break;
                     
-                    UIView * parameterView = nil;
-                    switch (parameter.type) {
-                        case SSParameterTypeVariable: {
-                            parameterView = [[SSVariableView alloc] initWithVariable:parameter.variable];
-                        } break;
-                        
-                        case SSParameterTypeString: {
-                            parameterView = [[SSStringView alloc] initWithString:parameter.string.value];
-                        } break;
-                        
-                        default:
-                            break;
-                    }
+                    case SSParameterTypeString: {
+                        parameterView = [[SSStringView alloc] initWithString:parameter.string.value];
+                    } break;
                     
-                    parameterView.tag = PARAMETER_BASE_INDEX + index;
-                    
-                    CGRect parameterFrame = parameterView.frame;
-                    parameterFrame.origin.x = x;
-                    parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
-                    parameterView.frame = parameterFrame;
-                    [self addSubview:parameterView];
-                    
-                    x += CGRectGetWidth(parameterFrame) + MIDDLE_PADDING;
+                    default:
+                        break;
                 }
-                else {
-                    x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
-                }
+                
+                parameterView.tag = PARAMETER_BASE_INDEX + index;
+                
+                CGRect parameterFrame = parameterView.frame;
+                parameterFrame.origin.x = x;
+                parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
+                parameterView.frame = parameterFrame;
+                
+                backSlitView.frame = CGRectMake(x - 5, 15, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(backSlitView.frame));
+                frontSlitView.frame = CGRectMake(x - 5, 45, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(frontSlitView.frame));
+                
+                [self addSubview:parameterView];
+                
+                x += CGRectGetWidth(parameterFrame) + MIDDLE_PADDING;
             }
             else {
+                backSlitView.frame = CGRectMake(x - 5, 15, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(backSlitView.frame));
+                frontSlitView.frame = CGRectMake(x - 5, 45, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(frontSlitView.frame));
                 x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
             }
+            
+            [self addSubview:frontSlitView];
             
             index++;
         }
