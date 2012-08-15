@@ -36,7 +36,7 @@
 @interface SSStatementView ()
 
 @property (strong, readwrite) SSStatement * statement;
-@property (strong) UIView * parameterView;
+@property (strong) SSParameter * previousParameter;
 
 - (UILabel *)signatureLabelAtIndex:(NSUInteger)index;
 - (UIView *)parameterViewAtIndex:(NSUInteger)index;
@@ -46,7 +46,7 @@
 @implementation SSStatementView
 
 @synthesize statement = _statement;
-@synthesize parameterView = _variableView;
+@synthesize previousParameter = _previousParameter;
 
 - (id)initWithCommand:(SSCommand *)command {
     NSManagedObjectContext * context = [command managedObjectContext];
@@ -62,103 +62,18 @@
         self.backgroundColor = [UIColor clearColor];
         
         // Select background image
-        UIImage * slitBack = [[UIImage imageNamed:@"slit_back.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
-        UIImage * slitFront = nil;
         UIImage * backgroundImage = nil;
-        if ([statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame) {
+        if ([statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame)
             backgroundImage = [UIImage imageNamed:@"blue_sm_btn.png"];
-            slitFront = [UIImage imageNamed:@"slit_front_blue.png"];
-        }
-        else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame) {
+        else if ([statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
             backgroundImage = [UIImage imageNamed:@"green_btn_sm.png"];
-            slitFront = [UIImage imageNamed:@"slit_front_green.png"];
-        }
         backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 12)];
-        slitFront = [slitFront resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
         UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
         backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         backgroundImageView.frame = self.bounds;
         [self addSubview:backgroundImageView];
         
-        NSSortDescriptor * sort = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
-        NSArray * signature = [statement.command.signature sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-        NSArray * parameters = [statement.parameters sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-        
-        UIFont * font = SSStatementFont();
-        CGFloat x = LEFT_PADDING;
-        NSUInteger index = 0;
-        NSUInteger parameterIndex = 0;
-        for (SSString * string in signature) {
-            NSString * value = string.value;
-            UILabel * label = [self signatureLabelAtIndex:index];
-            CGFloat width = ceilf([value sizeWithFont:font].width);
-            label.frame = CGRectMake(x, PARAMETER_VERTICAL_PADDING, width, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING);
-            label.text = value;
-            [self addSubview:label];
-            x += width + MIDDLE_PADDING;
-            
-            UIImageView * backSlitView = [[UIImageView alloc] initWithImage:slitBack];
-            UIImageView * frontSlitView = [[UIImageView alloc] initWithImage:slitFront];
-            backSlitView.tag = PARAMETER_BACK_BASE_INDEX + index;
-            frontSlitView.tag = PARAMETER_FRONT_BASE_INDEX + index;
-            [self addSubview:backSlitView];
-            
-            SSParameter * parameter = nil;
-            if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index) {
-                parameterIndex++;
-                
-                UIView * parameterView = nil;
-                switch (parameter.type) {
-                    case SSParameterTypeVariable: {
-                        parameterView = [[SSVariableView alloc] initWithVariable:parameter.variable];
-                    } break;
-                    
-                    case SSParameterTypeString: {
-                        parameterView = [[SSStringView alloc] initWithString:parameter.string.value];
-                    } break;
-                    
-                    default:
-                        break;
-                }
-                
-                parameterView.tag = PARAMETER_BASE_INDEX + index;
-                
-                CGRect parameterFrame = parameterView.frame;
-                parameterFrame.origin.x = x;
-                parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
-                parameterView.frame = parameterFrame;
-                
-                backSlitView.frame = CGRectMake(x - 5, 15, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(backSlitView.frame));
-                frontSlitView.frame = CGRectMake(x - 5, 45, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(frontSlitView.frame));
-                
-                [self addSubview:parameterView];
-                
-                x += CGRectGetWidth(parameterFrame) + MIDDLE_PADDING;
-            }
-            else {
-                backSlitView.frame = CGRectMake(x - 5, 15, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(backSlitView.frame));
-                frontSlitView.frame = CGRectMake(x - 5, 45, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(frontSlitView.frame));
-                x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
-            }
-            
-            [self addSubview:frontSlitView];
-            
-            index++;
-        }
-        
-        CGFloat periodWidth = [@"." sizeWithFont:font].width;
-        UILabel * periodLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, PARAMETER_VERTICAL_PADDING, periodWidth, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING)];
-        periodLabel.text = @".";
-        periodLabel.font = font;
-        periodLabel.backgroundColor = [UIColor clearColor];
-        periodLabel.textColor = [UIColor whiteColor];
-        periodLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        
-        x += periodWidth + RIGHT_PADDING;
-        
-        self.frame = CGRectMake(0, 0, x, DEFAULT_HEIGHT);
-        
-        [self addSubview:periodLabel];
+        [self updateLayout];
     }
     return self;
 }
@@ -194,115 +109,240 @@
     NSUInteger count = [self.statement.command.signature count];
     for (NSUInteger i = 0; i < count; i++) {
         UILabel * signatureLabel = [self signatureLabelAtIndex:i];
-        CGRect signatureFrame = signatureLabel.frame;
-        signatureFrame.origin.x = width;
-        signatureLabel.frame = signatureFrame;
-        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+        width += CGRectGetWidth(signatureLabel.frame) + MIDDLE_PADDING;
         
-        UIView * parameterView = [self parameterViewAtIndex:i];
         if (point.x >= width && point.x <= width + variableWidth) {
-            parameterView.hidden = YES;
-            width += variableWidth + MIDDLE_PADDING;
+            [self prepareForParameterView:variableView atIndex:i];
+            return;
         }
-        else {
-            CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
-            if (parameterView) {
-                CGRect parameterFrame = parameterView.frame;
-                parameterFrame.origin.x = width;
-                parameterView.frame = parameterFrame;
-                parameterWidth = CGRectGetWidth(parameterFrame);
-                parameterView.hidden = NO;
-            }
-            width += parameterWidth + MIDDLE_PADDING;
-        }
+        
+        CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
+        UIView * parameterView = [self parameterViewAtIndex:i];
+        if (parameterView)
+            parameterWidth = CGRectGetWidth(parameterView.frame);
+        width += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
     }
-    
-    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
-    width += periodWidth + RIGHT_PADDING;
-    
-    CGRect frame = self.frame;
-    frame.size.width = width;
-    self.frame = frame;
+    [self unprepare];
 }
 
-- (BOOL)addParameterView:(UIView *)newParameterView atPoint:(CGPoint)point {
+- (void)prepareForParameterView:(UIView *)parameterView atIndex:(NSUInteger)index {
+    if (!self.previousParameter) {
+        NSManagedObjectContext * context = self.statement.managedObjectContext;
+        
+        self.previousParameter.statement = self.statement;
+        
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"order = %d", index];
+        SSParameter * previousParameter = [[self.statement.parameters filteredSetUsingPredicate:predicate] anyObject];
+        previousParameter.statement = nil;
+        self.previousParameter = previousParameter;
+        
+        SSParameter * newParameter = [[SSParameter alloc] initWithManagedObjectContext:context];
+        newParameter.order = previousParameter.order;
+        newParameter.statement = self.statement;
+        
+        if ([parameterView isKindOfClass:[SSVariableView class]]) {
+            SSVariableView * variableView = (SSVariableView *)parameterView;
+            newParameter.variable = variableView.variable;
+            newParameter.type = SSParameterTypeVariable;
+        }
+        else if ([parameterView isKindOfClass:[SSStringView class]]) {
+            SSStringView * stringView = (SSStringView *)parameterView;
+            SSString * string = [[SSString alloc] initWithManagedObjectContext:context];
+            string.value = stringView.string;
+            newParameter.string = string;
+            newParameter.type = SSParameterTypeString;
+        }
+                
+        [self updateLayoutWithPreparedWidth:CGRectGetWidth(parameterView.frame) atIndex:index];
+    }
+}
+
+- (BOOL)addParameterView:(UIView *)variableView atPoint:(CGPoint)point {
     CGFloat width = LEFT_PADDING;
-    CGFloat newParameterWidth = CGRectGetWidth(newParameterView.frame);
+    CGFloat variableWidth = CGRectGetWidth(variableView.frame);
     NSUInteger count = [self.statement.command.signature count];
-    
-    BOOL added = NO;
-    
     for (NSUInteger i = 0; i < count; i++) {
         UILabel * signatureLabel = [self signatureLabelAtIndex:i];
-        CGRect signatureFrame = signatureLabel.frame;
-        signatureFrame.origin.x = width;
-        signatureLabel.frame = signatureFrame;
-        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+        width += CGRectGetWidth(signatureLabel.frame) + MIDDLE_PADDING;
         
+        if (point.x >= width && point.x <= width + variableWidth) {
+            return [self addParameterView:variableView atIndex:i];
+        }
+        
+        CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
         UIView * parameterView = [self parameterViewAtIndex:i];
-        if (point.x >= width && point.x <= width + newParameterWidth) {
-            if (parameterView)
-                [parameterView removeFromSuperview];
-            newParameterView.tag = PARAMETER_BASE_INDEX + i;
-            CGRect parameterFrame = newParameterView.frame;
-            parameterFrame.origin.x = width;
-            parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
-            newParameterView.frame = parameterFrame;
-            width += newParameterWidth + MIDDLE_PADDING;
-            [self addSubview:newParameterView];
-            added = YES;
-        }
-        else {
-            CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
-            if (parameterView) {
-                CGRect parameterFrame = parameterView.frame;
-                parameterFrame.origin.x = width;
-                parameterView.frame = parameterFrame;
-                parameterWidth = CGRectGetWidth(parameterFrame);
-                parameterView.hidden = NO;
-            }
-            width += parameterWidth + MIDDLE_PADDING;
-        }
+        if (parameterView)
+            parameterWidth = CGRectGetWidth(parameterView.frame);
+        width += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
+    }
+
+    return NO;
+}
+
+- (BOOL)addParameterView:(UIView *)parameterView atIndex:(NSUInteger)index {
+    NSManagedObjectContext * context = self.statement.managedObjectContext;
+    
+    self.previousParameter = nil;
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"order = %d", index];
+    SSParameter * previousParameter = [[self.statement.parameters filteredSetUsingPredicate:predicate] anyObject];
+    previousParameter.statement = nil;
+    
+    SSParameter * newParameter = [[SSParameter alloc] initWithManagedObjectContext:context];
+    newParameter.order = previousParameter.order;
+    newParameter.statement = self.statement;
+    
+    if ([parameterView isKindOfClass:[SSVariableView class]]) {
+        SSVariableView * variableView = (SSVariableView *)parameterView;
+        newParameter.variable = variableView.variable;
+        newParameter.type = SSParameterTypeVariable;
+    }
+    else if ([parameterView isKindOfClass:[SSStringView class]]) {
+        SSStringView * stringView = (SSStringView *)parameterView;
+        SSString * string = [[SSString alloc] initWithManagedObjectContext:context];
+        string.value = stringView.string;
+        newParameter.string = string;
+        newParameter.type = SSParameterTypeString;
     }
     
-    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
-    width += periodWidth + RIGHT_PADDING;
+    [[self viewWithTag:PARAMETER_BASE_INDEX + index] removeFromSuperview];
+    parameterView.tag = PARAMETER_BASE_INDEX + index;
+    [self addSubview:parameterView];
     
-    CGRect frame = self.frame;
-    frame.size.width = width;
-    self.frame = frame;
+    [self updateLayout];
     
-    return added;
+    return YES;
 }
 
 - (void)unprepare {
-    CGFloat width = LEFT_PADDING;
-    NSUInteger count = [self.statement.command.signature count];
-    for (NSUInteger i = 0; i < count; i++) {
-        UILabel * signatureLabel = [self signatureLabelAtIndex:i];
-        CGRect signatureFrame = signatureLabel.frame;
-        signatureFrame.origin.x = width;
-        signatureLabel.frame = signatureFrame;
-        width += CGRectGetWidth(signatureFrame) + MIDDLE_PADDING;
+    if (self.previousParameter) {
+        // TODO: Delete temporary objects
+//        NSManagedObjectContext * context = self.statement.managedObjectContext;
+        int16_t order = self.previousParameter.order;
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"order = %d", order];
+        SSParameter * newParameter = [[self.statement.parameters filteredSetUsingPredicate:predicate] anyObject];
+        newParameter.statement = nil;
+        self.previousParameter.statement = self.statement;
+//        [context deleteObject:newParameter.string];
+//        [context deleteObject:newParameter];
+        self.previousParameter = nil;
+        [self updateLayout];
+    }
+}
+
+- (void)updateLayout {
+    [self updateLayoutWithPreparedWidth:0 atIndex:NSUIntegerMax];
+}
+
+- (void)updateLayoutWithPreparedWidth:(CGFloat)preparedWidth atIndex:(NSUInteger)preparedIndex {
+    // Select background image
+    UIImage * slitBack = [[UIImage imageNamed:@"slit_back.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
+    UIImage * slitFront = nil;
+    if ([self.statement.command.signatureKey caseInsensitiveCompare:@"Write"] == NSOrderedSame)
+        slitFront = [UIImage imageNamed:@"slit_front_blue.png"];
+    else if ([self.statement.command.signatureKey caseInsensitiveCompare:@"Read"] == NSOrderedSame)
+        slitFront = [UIImage imageNamed:@"slit_front_green.png"];
+    slitFront = [slitFront resizableImageWithCapInsets:UIEdgeInsetsMake(0, 17, 0, 16)];
+    
+    NSSortDescriptor * sort = [[NSSortDescriptor alloc] initWithKey:@"order" ascending:YES];
+    NSArray * signature = [self.statement.command.signature sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+    NSArray * parameters = [self.statement.parameters sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+    
+    UIFont * font = SSStatementFont();
+    CGFloat x = LEFT_PADDING;
+    NSUInteger index = 0;
+    NSUInteger parameterIndex = 0;
+    for (SSString * string in signature) {
+        NSString * value = string.value;
+        UILabel * label = [self signatureLabelAtIndex:index];
+        CGFloat width = ceilf([value sizeWithFont:font].width);
+        label.frame = CGRectMake(x, PARAMETER_VERTICAL_PADDING, width, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING);
+        label.text = value;
+        [self addSubview:label];
+        x += width + MIDDLE_PADDING;
         
-        UIView * parameterView = [self parameterViewAtIndex:i];
-        CGFloat parameterWidth = DEFAULT_VARIABLE_WIDTH;
-        if (parameterView) {
-            CGRect parameterFrame = parameterView.frame;
-            parameterFrame.origin.x = width;
-            parameterView.frame = parameterFrame;
-            parameterWidth = CGRectGetWidth(parameterFrame);
-            parameterView.hidden = NO;
+        UIImageView * backSlitView = (UIImageView *)[self viewWithTag:PARAMETER_BACK_BASE_INDEX + index];
+        if (!backSlitView) {
+            backSlitView = [[UIImageView alloc] initWithImage:slitBack];
+            backSlitView.tag = PARAMETER_BACK_BASE_INDEX + index;
         }
-        width += parameterWidth + MIDDLE_PADDING;
+        UIImageView * frontSlitView = (UIImageView *)[self viewWithTag:PARAMETER_FRONT_BASE_INDEX + index];
+        if (!frontSlitView) {
+            frontSlitView = [[UIImageView alloc] initWithImage:slitFront];
+            frontSlitView.tag = PARAMETER_FRONT_BASE_INDEX + index;
+        }
+        [self addSubview:backSlitView];
+        
+        SSParameter * parameter = nil;
+        UIView * parameterView = [self parameterViewAtIndex:index];
+        
+        if (index == preparedIndex) {
+            if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index)
+                parameterIndex++;
+            backSlitView.frame = CGRectMake(x - 5, 15, preparedWidth + 10, CGRectGetHeight(backSlitView.frame));
+            frontSlitView.frame = CGRectMake(x - 5, 45, preparedWidth + 10, CGRectGetHeight(frontSlitView.frame));
+            parameterView.hidden = YES;
+            x += preparedWidth + MIDDLE_PADDING;
+        }
+        else if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index) {
+            parameterIndex++;
+            
+            if (!parameterView) {
+                switch (parameter.type) {
+                    case SSParameterTypeVariable: {
+                        parameterView = [[SSVariableView alloc] initWithVariable:parameter.variable];
+                    } break;
+                        
+                    case SSParameterTypeString: {
+                        parameterView = [[SSStringView alloc] initWithString:parameter.string.value];
+                    } break;
+                        
+                    default:
+                        break;
+                }
+                
+                parameterView.tag = PARAMETER_BASE_INDEX + index;
+            }
+            
+            CGRect parameterFrame = parameterView.frame;
+            parameterFrame.origin.x = x;
+            parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
+            parameterView.frame = parameterFrame;
+            parameterView.hidden = NO;
+            
+            backSlitView.frame = CGRectMake(x - 5, 15, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(backSlitView.frame));
+            frontSlitView.frame = CGRectMake(x - 5, 45, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(frontSlitView.frame));
+            
+            [self addSubview:parameterView];
+            
+            x += CGRectGetWidth(parameterFrame) + MIDDLE_PADDING;
+        }
+        else {
+            [parameterView removeFromSuperview];
+            backSlitView.frame = CGRectMake(x - 5, 15, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(backSlitView.frame));
+            frontSlitView.frame = CGRectMake(x - 5, 45, DEFAULT_VARIABLE_WIDTH + 10, CGRectGetHeight(frontSlitView.frame));
+            x += DEFAULT_VARIABLE_WIDTH + MIDDLE_PADDING;
+        }
+        
+        [self addSubview:frontSlitView];
+        
+        index++;
     }
     
-    CGFloat periodWidth = [@"." sizeWithFont:SSStatementFont()].width;
-    width += periodWidth + RIGHT_PADDING;
+    static NSString * periodString = @".";
+    CGFloat periodWidth = [periodString sizeWithFont:font].width;
+    UILabel * periodLabel = [self signatureLabelAtIndex:index];
+    periodLabel.frame = CGRectMake(x, PARAMETER_VERTICAL_PADDING, periodWidth, DEFAULT_HEIGHT - PARAMETER_VERTICAL_PADDING);
+    periodLabel.text = periodString;
+    
+    x += periodWidth + RIGHT_PADDING;
     
     CGRect frame = self.frame;
-    frame.size.width = width;
+    frame.size.width = x;
+    frame.size.height = DEFAULT_HEIGHT;
     self.frame = frame;
+    
+    [self addSubview:periodLabel];
 }
 
 @end

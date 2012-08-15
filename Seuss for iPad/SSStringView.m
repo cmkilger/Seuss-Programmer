@@ -8,6 +8,8 @@
 
 #import "SSStringView.h"
 
+#define SSStringViewFont() [UIFont fontWithName:@"DoctorSoosLight" size:28.0]
+
 @interface SSStringView ()
 
 @property (readwrite) NSString * string;
@@ -22,41 +24,41 @@
 //    for (NSString * familyName in [UIFont familyNames])
 //        NSLog(@"%@: %@", familyName, [UIFont fontNamesForFamilyName:familyName]);
     
-    string = [string stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
-    string = [string stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];
-    string = [string stringByReplacingOccurrencesOfString:@"\t" withString:@"\\t"];
-    string = [NSString stringWithFormat:@"\u201c%@\u201d", string];
+    NSString * displayString = [self displayStringForString:string];
     
-    CGSize size = [string sizeWithFont:[UIFont fontWithName:@"DoctorSoosLight" size:28.0]];
-    size.width += 20;
-    size.height = 47;
-    
-    CGRect frame = CGRectZero;
-    frame.size = size;
+    UIFont * font = SSStringViewFont(); 
+    CGSize size = [displayString sizeWithFont:font];
+    CGRect frame = CGRectMake(0, 0, size.width+20, 47);
     self = [super initWithFrame:CGRectIntegral(frame)];
     if (self) {
         _string = string;
         self.backgroundColor = [UIColor clearColor];
         
-        UIImage *backgroundImg = [[UIImage imageNamed:@"string_bg.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-        UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:backgroundImg];
-        backgroundImgView.frame = self.bounds;
+        UIImage * backgroundImage = [[UIImage imageNamed:@"string_bg.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        UIImageView * backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+        backgroundImageView.frame = self.bounds;
         
-        [self addSubview:backgroundImgView];
-        [self sendSubviewToBack:backgroundImgView];
+        [self addSubview:backgroundImageView];
+        [self sendSubviewToBack:backgroundImageView];
         
-        UIFont * font = [UIFont fontWithName:@"DoctorSoosLight" size:28.0];
-        CGSize size = [string sizeWithFont:font];
         CGRect frame = CGRectIntegral(CGRectMake(10, 8, size.width, size.height));
-        UILabel *theVariable = [[UILabel alloc] initWithFrame:frame];
-        theVariable.font = font;
-        theVariable.backgroundColor = [UIColor clearColor];
-        theVariable.textColor = [UIColor whiteColor];
-        theVariable.text = string;
-        [self addSubview:theVariable];
+        UILabel * stringLabel = [[UILabel alloc] initWithFrame:frame];
+        stringLabel.font = font;
+        stringLabel.backgroundColor = [UIColor clearColor];
+        stringLabel.textColor = [UIColor whiteColor];
+        stringLabel.text = displayString;
+        [self addSubview:stringLabel];
     }
     return self;
+}
+
+- (NSString *)displayStringForString:(NSString *)string {
+    NSMutableString * displayString = [[NSMutableString alloc] initWithString:string];
+    [displayString replaceOccurrencesOfString:@"\\" withString:@"\\\\" options:0 range:NSMakeRange(0, [displayString length])];
+    [displayString replaceOccurrencesOfString:@"\"" withString:@"\\\"" options:0 range:NSMakeRange(0, [displayString length])];
+    [displayString replaceOccurrencesOfString:@"\n" withString:@"\\n" options:0 range:NSMakeRange(0, [displayString length])];
+    [displayString replaceOccurrencesOfString:@"\t" withString:@"\\t" options:0 range:NSMakeRange(0, [displayString length])];
+    return [NSString stringWithFormat:@"\u201c%@\u201d", string];
 }
 
 @end

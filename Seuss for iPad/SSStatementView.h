@@ -21,7 +21,9 @@
 - (void)addParameterGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
 
 - (void)prepareForParameterView:(UIView *)variableView atPoint:(CGPoint)point;
+- (void)prepareForParameterView:(UIView *)variableView atIndex:(NSUInteger)index;
 - (BOOL)addParameterView:(UIView *)variableView atPoint:(CGPoint)point;
+- (BOOL)addParameterView:(UIView *)variableView atIndex:(NSUInteger)index;
 - (void)unprepare;
 
 @end
