@@ -204,12 +204,12 @@
 
 - (void)moveParameter:(UIGestureRecognizer *)gesture {
     UIView * view = [gesture view];
-    CGPoint point = [gesture locationInView:self.mainView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
             if (!self.movingParameter) {
                 UIView * movingView = view;
                 if ([self.variableViews containsObject:movingView]) {
+                    CGPoint point = [gesture locationInView:self.mainView];
                     movingView = [[SSVariableView alloc] initWithVariable:[(SSVariableView *)view variable]];
                     [movingView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
                     [movingView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveParameter:)]];
@@ -218,12 +218,17 @@
                     movingView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
                     movingView.layer.shadowRadius = 3.0;
                     movingView.layer.cornerRadius = 3.0;
+                    movingView.center = point;
+                    [self.mainView addSubview:movingView];
                 }
                 else {
                     // TODO: remove from the statement
+                    SSStatementView * statementView = (SSStatementView *)[movingView superview];
+                    [statementView removeParameterForView:movingView];
+                    movingView.center = [gesture locationInView:statementView];
+                    [[movingView superview] bringSubviewToFront:movingView];
+                    [self.mainView bringSubviewToFront:statementView];
                 }
-                movingView.center = point;
-                [self.mainView addSubview:movingView];
                 self.movingParameter = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(1.25, 1.25);
@@ -234,15 +239,19 @@
         } break;
             
         case UIGestureRecognizerStateChanged: {
-            self.movingParameter.center = point;
-            [UIView animateWithDuration:0.2 animations:^{
-                for (SSStatementView * statementView in self.statementViews) {
-                    if (CGRectContainsPoint(statementView.frame, point))
-                        [statementView prepareForParameterView:self.movingParameter atPoint:[self convertPoint:point toView:statementView]];
-                    else
-                        [statementView unprepare];
+            UIView * movingView = self.movingParameter;
+            CGPoint point = [gesture locationInView:[movingView superview]];
+            movingView.center = point;
+            for (SSStatementView * statementView in self.statementViews) {
+                if (CGRectContainsPoint(statementView.frame, [self.mainView convertPoint:point fromView:[movingView superview]])) {
+                    CGPoint statementPoint = [[movingView superview] convertPoint:point toView:statementView];
+                    [statementView prepareForParameterView:movingView atPoint:statementPoint animated:YES];
                 }
-            }];
+                else {
+                    [statementView unprepareAnimated:YES];
+                }
+            }
+            [[movingView superview] bringSubviewToFront:movingView];
             
         } break;
             
@@ -250,16 +259,16 @@
             BOOL added = NO;
             UIView * movingView = self.movingParameter;
             self.movingParameter = nil;
-            movingView.alpha = 1.0;
-            movingView.transform = CGAffineTransformIdentity;
             for (SSStatementView * statementView in self.statementViews) {
+                CGPoint point = [gesture locationInView:self.mainView];
                 if (CGRectContainsPoint(statementView.frame, point)) {
-                    added = [statementView addParameterView:movingView atPoint:[self convertPoint:point toView:statementView]];
+                    [self.mainView bringSubviewToFront:statementView];
+                    added = [statementView addParameterView:movingView atPoint:[statementView convertPoint:point fromView:self.mainView]];
                     break;
                 }
             }
             if (!added) {
-                [UIView animateWithDuration:0.1 animations:^{
+                [UIView animateWithDuration:0.2 animations:^{
                     movingView.alpha = 0.0;
                 } completion:^(BOOL finished) {
                     [movingView removeFromSuperview];

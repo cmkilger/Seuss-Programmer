@@ -30,6 +30,7 @@
 		9A3E36C815BA74E400C3C268 /* SSCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36C715BA74E400C3C268 /* SSCanvasView.m */; };
 		9A3E36CB15BA755E00C3C268 /* SSStatementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CA15BA755E00C3C268 /* SSStatementView.m */; };
 		9A3E36CE15BA758100C3C268 /* SSVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E36CD15BA758100C3C268 /* SSVariableView.m */; };
+		9A4EBA1D15DC4DE900A15E33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4EBA1C15DC4DE900A15E33 /* QuartzCore.framework */; };
 		9A599F1015C26B72000DED43 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F0E15C26B72000DED43 /* Model.xcdatamodeld */; };
 		9A599F3915C315E9000DED43 /* SSProgram+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F3815C315E9000DED43 /* SSProgram+Additions.m */; };
 		9A599F4E15C4886B000DED43 /* NSManagedObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A599F4D15C4886B000DED43 /* NSManagedObject+Additions.m */; };
@@ -101,6 +102,7 @@
 		9A3E36CA15BA755E00C3C268 /* SSStatementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSStatementView.m; sourceTree = "<group>"; };
 		9A3E36CC15BA758100C3C268 /* SSVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSVariableView.h; sourceTree = "<group>"; };
 		9A3E36CD15BA758100C3C268 /* SSVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSVariableView.m; sourceTree = "<group>"; };
+		9A4EBA1C15DC4DE900A15E33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9A599F0F15C26B72000DED43 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9A599F3715C315E9000DED43 /* SSProgram+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSProgram+Additions.h"; sourceTree = "<group>"; };
 		9A599F3815C315E9000DED43 /* SSProgram+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSProgram+Additions.m"; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4EBA1D15DC4DE900A15E33 /* QuartzCore.framework in Frameworks */,
 				9A599F8915C50C2E000DED43 /* CoreData.framework in Frameworks */,
 				9AB784AF15BBC703002CEE23 /* libseuss.a in Frameworks */,
 				9A3E369215BA745700C3C268 /* UIKit.framework in Frameworks */,
@@ -217,6 +220,7 @@
 				9A3E369115BA745700C3C268 /* UIKit.framework */,
 				9A3E369315BA745700C3C268 /* Foundation.framework */,
 				9A3E369515BA745700C3C268 /* CoreGraphics.framework */,
+				9A4EBA1C15DC4DE900A15E33 /* QuartzCore.framework */,
 				9A599F8815C50C2E000DED43 /* CoreData.framework */,
 				9A3E36AF15BA745700C3C268 /* SenTestingKit.framework */,
 			);

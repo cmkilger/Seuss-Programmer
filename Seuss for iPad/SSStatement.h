@@ -18,6 +18,7 @@
 @property (nonatomic, retain) SSCommand *command;
 @property (nonatomic, retain) NSSet *parameters;
 @property (nonatomic, retain) SSProgram *program;
+
 @end
 
 @interface SSStatement (CoreDataGeneratedAccessors)

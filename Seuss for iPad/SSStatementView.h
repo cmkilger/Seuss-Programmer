@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @class SSStatement;
 @class SSCommand;
@@ -20,10 +21,11 @@
 
 - (void)addParameterGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
 
-- (void)prepareForParameterView:(UIView *)variableView atPoint:(CGPoint)point;
-- (void)prepareForParameterView:(UIView *)variableView atIndex:(NSUInteger)index;
+- (void)prepareForParameterView:(UIView *)variableView atPoint:(CGPoint)point animated:(BOOL)animated;
+- (void)prepareForParameterView:(UIView *)variableView atIndex:(NSUInteger)index animated:(BOOL)animated;
 - (BOOL)addParameterView:(UIView *)variableView atPoint:(CGPoint)point;
 - (BOOL)addParameterView:(UIView *)variableView atIndex:(NSUInteger)index;
-- (void)unprepare;
+- (BOOL)removeParameterForView:(UIView *)variableView;
+- (void)unprepareAnimated:(BOOL)animated;
 
 @end
