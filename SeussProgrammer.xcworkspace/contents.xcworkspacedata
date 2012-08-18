@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Seuss for iPad.xcodeproj">
+      location = "group:SeussProgrammer.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Seuss/seuss.xcodeproj">
