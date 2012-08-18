@@ -23,6 +23,8 @@
 
 @interface SSCanvasView ()
 
+@property (strong) NSString * filePath;
+
 @property (strong) NSMutableArray * commandViews;
 @property (strong) NSMutableArray * variableViews;
 @property (strong) NSMutableArray * statementViews;
@@ -43,6 +45,7 @@
 
 @implementation SSCanvasView
 
+@synthesize filePath = _filePath;
 @synthesize commandViews = _commandViews;
 @synthesize variableViews = _variableViews;
 @synthesize statementViews = _statementViews;
@@ -360,6 +363,7 @@
         statement.program = program;
         statement.order = idx;
     }];
+    [self saveFile];
 }
 
 - (void)loadFileAtPath:(NSString *)path {
@@ -399,8 +403,13 @@
     
     self.context = context;
     self.program = program;
+    self.filePath = path;
     
     [self setNeedsLayout];
+}
+
+- (void)saveFile {
+    [[self.program data] writeToFile:self.filePath atomically:YES];
 }
 
 @end

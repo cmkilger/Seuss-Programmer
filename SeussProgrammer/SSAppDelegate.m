@@ -25,7 +25,8 @@
         if ([[file pathExtension] isEqualToString:@"seuss"]) {
             NSString * toPath = [documentsFolder stringByAppendingPathComponent:[file lastPathComponent]];
             NSString * fromPath = [bundlePath stringByAppendingPathComponent:file];
-            [[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:nil];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:toPath])
+                [[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:nil];
         }
     }
     
