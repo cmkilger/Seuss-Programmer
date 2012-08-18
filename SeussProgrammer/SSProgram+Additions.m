@@ -104,7 +104,46 @@
 }
 
 - (NSData *)data {
-    return nil;
+    NSMutableString * output = [[NSMutableString alloc] init];
+    
+    NSArray * descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES]];
+    NSArray * sortedStatements = [self.statements sortedArrayUsingDescriptors:descriptors];
+    for (SSStatement * statement in sortedStatements) {
+        NSArray * signature = [statement.command.signature sortedArrayUsingDescriptors:descriptors];
+        NSArray * parameters = [statement.parameters sortedArrayUsingDescriptors:descriptors];
+        
+        NSUInteger index = 0;
+        NSUInteger parameterIndex = 0;
+        for (SSString * string in signature) {
+            if (index == 0)
+                [output appendString:@" "];
+            [output appendString:string.value];
+            
+            SSParameter * parameter = nil;
+            if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index) {
+                [output appendString:@" "];
+                switch (parameter.type) {
+                    case SSParameterTypeString: {
+                        [output appendFormat:@"\"%@\"", parameter.string.value];
+                    } break;
+                        
+                    case SSParameterTypeVariable: {
+                        [output appendString:parameter.variable.name];
+                    } break;
+                        
+                    default:
+                        break;
+                }
+                parameterIndex++;
+            }
+            
+            index++;
+        }
+        
+        [output appendString:@".\n"];
+    }
+    
+    return [output dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

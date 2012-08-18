@@ -57,7 +57,7 @@
 }
 
 - (IBAction)runButtonClicked:(id)sender {
-    SSConsoleViewController * console = [[SSConsoleViewController alloc] initFilePath:self.currentFilePath];
+    SSConsoleViewController * console = [[SSConsoleViewController alloc] initWithProgram:self.canvasView.program];
     [self presentModalViewController:console animated:YES];
 }
 

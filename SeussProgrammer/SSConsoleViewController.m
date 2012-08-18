@@ -7,7 +7,7 @@
 //
 
 #import "SSConsoleViewController.h"
-#import <Seuss/Seuss.h>
+#import "SSProgram+Additions.h"
 
 #define FONT [UIFont fontWithName:@"DoctorSoosLight" size:36.0]
 
@@ -58,14 +58,22 @@ SUString * SSReadString(void * data) {
     return SUStringCreate([string cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
-- (id)initFilePath:(NSString *)file {
+- (id)initWithFilePath:(NSString *)file {
+    return [self initWithData:[NSData dataWithContentsOfFile:file] name:[[file lastPathComponent] stringByDeletingPathExtension]];
+}
+
+- (id)initWithProgram:(SSProgram *)program {    self = [super initWithNibName:nil bundle:nil];
+    return [self initWithData:[program data] name:[program name]];
+}
+
+- (id)initWithData:(NSData *)data name:(NSString *)name {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.title = [[file lastPathComponent] stringByDeletingPathExtension];
+        self.title = name;
         self.text = [[NSMutableString alloc] init];
         
-        SUString * fileStr = SUStringCreate([file cStringUsingEncoding:NSUTF8StringEncoding]);
-        SUList * tokens = SUTokenizeFile(fileStr);
+        SUString * fileStr = SUStringCreate([name cStringUsingEncoding:NSUTF8StringEncoding]);
+        SUList * tokens = SUTokenizeData([data bytes], [data length], fileStr);
         SUList * errors = SUListCreate();
         SUProgram * program = SUProgramCreate(tokens, errors);
         SUProgramSetWriteCallback(program, SSWriteString, (__bridge void *)self);
@@ -73,7 +81,7 @@ SUString * SSReadString(void * data) {
         SURelease(fileStr);
         SURelease(tokens);
         SURelease(errors);
-                  
+        
         self.program = program;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

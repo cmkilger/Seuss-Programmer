@@ -290,7 +290,6 @@
                     parameterIndex++;
                 backSlitView.frame = CGRectMake(x - 5, 15, preparedWidth + 10, CGRectGetHeight(backSlitView.frame));
                 frontSlitView.frame = CGRectMake(x - 5, 45, preparedWidth + 10, CGRectGetHeight(frontSlitView.frame));
-//                parameterView.alpha = 0.0;
                 x += preparedWidth + MIDDLE_PADDING;
             }
             else if (parameterIndex < [parameters count] && (parameter = [parameters objectAtIndex:parameterIndex]) && parameter.order == index) {
@@ -317,7 +316,6 @@
                 parameterFrame.origin.x = x;
                 parameterFrame.origin.y = PARAMETER_VERTICAL_PADDING;
                 parameterView.frame = parameterFrame;
-//                parameterView.alpha = 1.0;
                 
                 backSlitView.frame = CGRectMake(x - 5, 15, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(backSlitView.frame));
                 frontSlitView.frame = CGRectMake(x - 5, 45, CGRectGetWidth(parameterFrame) + 10, CGRectGetHeight(frontSlitView.frame));

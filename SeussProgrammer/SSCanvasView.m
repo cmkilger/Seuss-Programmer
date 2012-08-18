@@ -16,6 +16,7 @@
 #import "SSCommand+Additions.h"
 #import "SSParameter.h"
 #import "SSVariable.h"
+#import "SSStatement.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <Seuss/Seuss.h>
@@ -51,6 +52,7 @@
 @synthesize commandResevoir = _commandResevoir;
 @synthesize variableResevoir = _variableResevoir;
 @synthesize context = _context;
+@synthesize program = _program;
 
 - (void)initialize {
     _commandViews = [[NSMutableArray alloc] init];
@@ -147,6 +149,7 @@
                 else {
                     movingView = (SSStatementView *)view;
                     [self.statementViews removeObject:movingView];
+                    [self updateProgram];
                 }
                 movingView.center = point;
                 [self.mainView addSubview:movingView];
@@ -178,6 +181,7 @@
                         break;
                 }
                 [self.statementViews insertObject:movingView atIndex:index];
+                [self updateProgram];
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformIdentity;
                     movingView.alpha = 1.0;
@@ -347,6 +351,17 @@
         [subview removeFromSuperview];
 }
 
+- (void)updateProgram {
+    SSProgram * program = self.program;
+    program.statements = nil;
+    [self.statementViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        SSStatementView * statementView = obj;
+        SSStatement * statement = statementView.statement;
+        statement.program = program;
+        statement.order = idx;
+    }];
+}
+
 - (void)loadFileAtPath:(NSString *)path {
     [self reset];
     
@@ -383,6 +398,7 @@
     }
     
     self.context = context;
+    self.program = program;
     
     [self setNeedsLayout];
 }
