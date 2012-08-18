@@ -193,6 +193,9 @@
                 }];
             }
             else {
+                NSManagedObjectContext * context = [self.program managedObjectContext];
+                [context deleteObject:movingView.statement];
+                [self updateProgram];
                 [UIView animateWithDuration:0.1 animations:^{
                     movingView.transform = CGAffineTransformMakeScale(3.0, 3.0);
                     movingView.alpha = 0.0;
@@ -229,12 +232,12 @@
                     [self.mainView addSubview:movingView];
                 }
                 else {
-                    // TODO: remove from the statement
                     SSStatementView * statementView = (SSStatementView *)[movingView superview];
                     [statementView removeParameterForView:movingView];
                     movingView.center = [gesture locationInView:statementView];
                     [[movingView superview] bringSubviewToFront:movingView];
                     [self.mainView bringSubviewToFront:statementView];
+                    [self updateProgram];
                 }
                 self.movingParameter = movingView;
                 [UIView animateWithDuration:0.1 animations:^{
@@ -271,6 +274,7 @@
                 if (CGRectContainsPoint(statementView.frame, point)) {
                     [self.mainView bringSubviewToFront:statementView];
                     added = [statementView addParameterView:movingView atPoint:[statementView convertPoint:point fromView:self.mainView]];
+                    [self updateProgram];
                     break;
                 }
             }
@@ -363,6 +367,14 @@
         statement.program = program;
         statement.order = idx;
     }];
+    
+    NSError * error = nil;
+    NSManagedObjectContext * context = [program managedObjectContext];
+    [context save:&error];
+    if (error) {
+        NSLog(@"ERROR: %@", error);
+    }
+    
     [self saveFile];
 }
 
