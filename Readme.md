@@ -1,7 +1,7 @@
 Seuss Programmer
 ================
 
-Seuss Programmer is an simple drag and drop IDE for the [Seuss programming language](http://github.com/cmkilger/Seuss) for the iPad. Please see that project to learn more about the language itself.
+Seuss Programmer is a simple drag and drop IDE for the [Seuss programming language](http://github.com/cmkilger/Seuss) for the iPad. Please see that project to learn more about the language itself.
 
 Getting Started
 ---------------
